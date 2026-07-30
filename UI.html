@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NexusForge — Jobs, Internships & Workshops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #0B1D3A;
+  --navy2: #142c54;
+  --red: #E63946;
+  --red-dark: #C62839;
+  --bg: #F7F8FC;
+  --text: #14213D;
+  --muted: #5C6784;
+  --white: #ffffff;
+  --border: #E7E9F2;
+  --radius: 14px;
+  --shadow: 0 20px 45px -20px rgba(11, 29, 58, 0.28);
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); }
+h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; color: var(--navy); }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- Nav ---------- */
+.nav { background: var(--navy); position: sticky; top: 0; z-index: 50; }
+.nav__inner { max-width: 1180px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+.logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 20px; color: var(--white); display: flex; align-items: center; gap: 8px; }
+.logo__mark { width: 30px; height: 30px; border-radius: 9px; background: var(--red); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; }
+
+/* Jobs / Internships / Workshops tab switcher */
+.mode-tabs { display: flex; gap: 6px; background: rgba(255,255,255,0.08); padding: 5px; border-radius: 10px; }
+.mode-tab { padding: 9px 20px; border-radius: 7px; font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.65); cursor: pointer; border: none; background: transparent; font-family: inherit; }
+.mode-tab.active { background: var(--red); color: white; }
+
+/* ---------- Hero (real photo background) ---------- */
+.hero {
+  position: relative;
+  padding: 80px 24px 130px;
+  background-image: linear-gradient(120deg, rgba(11,29,58,0.92) 0%, rgba(11,29,58,0.72) 55%, rgba(11,29,58,0.55) 100%), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1800&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+.hero__inner { max-width: 1180px; margin: 0 auto; }
+.eyebrow { color: #FF8A80; font-weight: 600; font-size: 13.5px; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 14px; }
+.hero h1 { color: var(--white); font-size: 44px; line-height: 1.15; font-weight: 700; margin-bottom: 18px; max-width: 640px; }
+.hero__sub { color: rgba(255,255,255,0.78); font-size: 16px; line-height: 1.65; max-width: 520px; margin: 0; }
+
+/* ---------- Search panel ---------- */
+.search-panel { max-width: 1180px; margin: -78px auto 0; padding: 0 24px; position: relative; z-index: 5; }
+.search-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 30px; }
+.search-row { display: flex; gap: 18px; flex-wrap: wrap; }
+.field { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+.field input, .field select {
+  padding: 13px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 14.5px; font-family: inherit; color: var(--text); background: var(--white);
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--red); outline-offset: 1px; }
+.field--btn { flex: 0 0 auto; align-self: flex-end; }
+
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 13px 26px; border-radius: 8px; font-weight: 600; font-size: 14.5px; border: 1px solid transparent; cursor: pointer; transition: transform .12s ease, background .15s ease; }
+.btn--primary { background: var(--red); color: var(--white); }
+.btn--primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+.btn--sm { padding: 9px 16px; font-size: 13.5px; }
+.btn--search { white-space: nowrap; height: 47px; }
+.btn--ghost { background: transparent; color: var(--navy); border-color: var(--border); }
+.btn--ghost:hover { border-color: var(--navy); }
+
+.resume-row {
+  margin-top: 16px; padding: 14px 16px; border: 1px dashed var(--border); border-radius: 10px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; background: #FBFBFE;
+}
+.resume-upload { font-size: 13.5px; font-weight: 600; color: var(--navy); cursor: pointer; }
+.resume-row input[type="file"] { font-size: 13px; font-family: inherit; }
+.resume-status { font-size: 12.5px; color: var(--muted); }
+.resume-status.ok { color: #1a7f4e; font-weight: 600; }
+.resume-status.err { color: var(--red-dark); font-weight: 600; }
+
+.location-bar {
+  margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end;
+}
+.location-bar .field { min-width: 150px; }
+.checkbox { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; margin-bottom: 13px; white-space: nowrap; }
+.checkbox input { width: 17px; height: 17px; accent-color: var(--red); }
+
+.trending { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+
+/* ---------- Photo strip (why-us section, real image) ---------- */
+.photo-strip {
+  max-width: 1180px; margin: 60px auto 0; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
+}
+.photo-strip img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); display: block; }
+.photo-strip__text h2 { font-size: 26px; margin-bottom: 12px; }
+.photo-strip__text p { color: var(--muted); font-size: 14.5px; line-height: 1.65; }
+
+/* ---------- Results ---------- */
+.results { padding: 64px 24px 40px; }
+.results__inner { max-width: 1180px; margin: 0 auto; }
+.results__header { margin-bottom: 28px; }
+.results__header-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.results__sub { color: var(--muted); margin-top: 6px; font-size: 14.5px; }
+.location-note {
+  margin-top: 12px; padding: 12px 16px; background: #FFF6EC; border: 1px solid #F4D9AE;
+  border-radius: 10px; color: #8A5A0A; font-size: 13.5px; line-height: 1.55;
+}
+
+@media print {
+  .nav, .hero, .search-panel, .photo-strip, .footer, .no-print { display: none !important; }
+  body { background: white; }
+  .results { padding: 0; }
+  .job-card, .deep-link-card { break-inside: avoid; }
+}
+
+.job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.job-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+.job-card__banner {
+  height: 74px; display: flex; align-items: center; gap: 10px; padding: 0 22px;
+  font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13.5px; color: var(--white);
+  letter-spacing: .02em;
+}
+.job-card__banner svg { width: 26px; height: 26px; flex-shrink: 0; }
+.job-card__body { padding: 4px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.cat-tech      { background: linear-gradient(120deg,#1f3a93,#3a6fd8); }
+.cat-design    { background: linear-gradient(120deg,#8e2de2,#c56cf0); }
+.cat-marketing { background: linear-gradient(120deg,#e63946,#ff6b6b); }
+.cat-data      { background: linear-gradient(120deg,#0f9b8e,#1cc9b7); }
+.cat-sales     { background: linear-gradient(120deg,#d68910,#f5b041); }
+.cat-finance   { background: linear-gradient(120deg,#145a32,#28a745); }
+.cat-writing   { background: linear-gradient(120deg,#6c5ce7,#a29bfe); }
+.cat-support   { background: linear-gradient(120deg,#2c6975,#4fb3bf); }
+.cat-general   { background: linear-gradient(120deg,#0B1D3A,#142c54); }
+.job-card__top { display: flex; justify-content: space-between; align-items: center; }
+.job-card__logo-row { display: flex; align-items: center; gap: 10px; }
+.job-card__logo {
+  width: 34px; height: 34px; border-radius: 9px; background: var(--white);
+  border: 1px solid var(--border); object-fit: contain; padding: 5px; flex-shrink: 0;
+}
+.job-card__badge { background: #FDECEC; color: var(--red-dark); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; }
+.job-card__match { font-size: 12.5px; font-weight: 600; color: var(--navy); }
+.job-card h3 { font-size: 17px; line-height: 1.35; }
+.job-card__meta { font-size: 13px; color: var(--muted); margin: 0; }
+.job-card__desc { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0; flex: 1; }
+.job-card__foot { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--border); }
+.job-card__source { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.empty-state { background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius); padding: 28px; color: var(--muted); margin-bottom: 12px; }
+
+.deep-links { margin-top: 48px; }
+.deep-links h3 { font-size: 20px; margin-bottom: 6px; }
+.deep-links__note { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 640px; }
+.deep-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.deep-link-card { background: var(--navy); color: var(--white); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: transform .12s ease; }
+.deep-link-card:hover { transform: translateY(-3px); }
+.deep-link-card__head { display: flex; align-items: center; gap: 12px; }
+.deep-link-card__logo {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--white);
+  object-fit: contain; padding: 6px; flex-shrink: 0;
+}
+.deep-link-card__platform { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px; }
+.deep-link-card p { font-size: 13px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.5; flex: 1; }
+.deep-link-card__cta { font-size: 13px; font-weight: 600; color: #FF8A80; }
+
+.footer { background: var(--navy); padding: 40px 24px; margin-top: 40px; }
+.footer__inner { max-width: 1180px; margin: 0 auto; }
+.footer p { color: rgba(255,255,255,0.55); font-size: 13.5px; max-width: 560px; line-height: 1.6; }
+.footer__copyright { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.4) !important; }
+
+@media (max-width: 860px) {
+  .hero h1 { font-size: 32px; }
+  .search-panel { margin-top: -50px; }
+  .field--btn, .btn--search { width: 100%; justify-content: center; }
+  .photo-strip { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav__inner">
+    <div class="logo"><span class="logo__mark">N</span>NexusForge</div>
+    <div class="mode-tabs" id="mode-tabs">
+      <button class="mode-tab active" data-mode="jobs">Jobs</button>
+      <button class="mode-tab" data-mode="internships">Internships</button>
+      <button class="mode-tab" data-mode="workshops">Workshops</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__inner">
+    <p class="eyebrow" id="hero-eyebrow">One search. Every platform.</p>
+    <h1 id="hero-title">Stop tab-hopping between job boards.</h1>
+    <p class="hero__sub" id="hero-sub">NexusForge scans live openings from Remotive, Arbeitnow, RemoteOK and The Muse, ranks them against your role, skills and experience, and hands you a shortlist worth your time.</p>
+  </div>
+</section>
+
+<section class="search-panel">
+  <form class="search-card" id="search-form">
+    <div class="search-row">
+      <div class="field">
+        <label for="role" id="role-label">Desired role</label>
+        <input type="text" id="role" placeholder="e.g. Python Developer" value="Python Developer" required>
+      </div>
+      <div class="field">
+        <label for="skills">Your skills</label>
+        <input type="text" id="skills" placeholder="Python, SQL, Django" value="Python, SQL, Django">
+      </div>
+      <div class="field" id="experience-field">
+        <label for="experience">Experience level</label>
+        <select id="experience">
+          <option value="">Any level</option>
+          <option value="fresher">Fresher / 0–1 yrs</option>
+          <option value="junior">Junior · 1–3 yrs</option>
+          <option value="mid">Mid-level · 3–5 yrs</option>
+          <option value="senior">Senior · 5+ yrs</option>
+        </select>
+      </div>
+      <div class="field field--btn">
+        <button type="submit" class="btn btn--primary btn--search" id="search-btn">Find a job →</button>
+      </div>
+    </div>
+
+    <div class="resume-row">
+      <label class="resume-upload" for="resume-file">
+        📄 Upload your resume (PDF) — auto-fills your skills
+      </label>
+      <input type="file" id="resume-file" accept="application/pdf">
+      <span id="resume-status" class="resume-status"></span>
+    </div>
+
+    <div class="location-bar">
+      <div class="field" id="work-mode-field">
+        <label for="work-mode">Work mode</label>
+        <select id="work-mode">
+          <option value="any">Any</option>
+          <option value="remote">Remote</option>
+          <option value="onsite">On-site / Offline</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="country">Country</label>
+        <select id="country"></select>
+      </div>
+      <div class="field">
+        <label for="state">State</label>
+        <select id="state"></select>
+      </div>
+      <div class="field">
+        <label for="district">District / City</label>
+        <select id="district-select" hidden></select>
+        <input type="text" id="district" list="district-list" placeholder="e.g. your district or city" autocomplete="off">
+        <datalist id="district-list"></datalist>
+      </div>
+    </div>
+    <p class="trending">Trending: Frontend Developer &middot; Data Analyst &middot; UI/UX Design &middot; DevOps</p>
+  </form>
+</section>
+
+<section class="photo-strip">
+  <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format&fit=crop" alt="Team reviewing job matches" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80&auto=format&fit=crop';">
+  <div class="photo-strip__text">
+    <h2>Why search platform by platform?</h2>
+    <p>Every extra tab is a search you have to repeat by hand. NexusForge runs your role and skills against several live job feeds at once, ranks what comes back, and — for the sites it can't query directly — hands you a search link that's already filled in and ready to open.</p>
+  </div>
+</section>
+
+<section class="results" id="results" hidden>
+  <div class="results__inner">
+    <div class="results__header">
+      <div class="results__header-top">
+        <h2 id="results-title">Live openings</h2>
+        <button type="button" class="btn btn--ghost btn--sm no-print" id="download-pdf-btn">⬇ Download results as PDF</button>
+      </div>
+      <p id="results-sub" class="results__sub"></p>
+      <p id="location-note" class="location-note" hidden></p>
+    </div>
+    <div class="job-grid" id="job-grid"></div>
+    <div class="empty-state" id="empty-state" hidden>
+      <p id="empty-text"></p>
+    </div>
+
+    <div class="deep-links" id="deep-links-section">
+      <h3 id="deep-links-title">Check these platforms directly</h3>
+      <p class="deep-links__note" id="deep-links-note"></p>
+      <div class="deep-link-grid" id="deep-link-grid"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="logo"><span class="logo__mark">N</span>NexusForge</div>
+    <p>NexusForge aggregates live listings from open job APIs and points you to platforms it can't query directly. It doesn't host applications — every link sends you to the original source.</p>
+    <p class="footer__copyright">&copy; 2026 NexusForge. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------
+// Static, offline country -> states/provinces dataset.
+// No network call, no external API, no "Failed to fetch" possible.
+// Everything lives right here inside UI.html — no separate file needed.
+//
+// Coverage: every UN member state is present. Larger, commonly-searched
+// countries have their real states/provinces/regions listed; a handful of
+// very small countries (city-states, island nations with no first-level
+// subdivisions) are listed with an empty state array — for those, users
+// just leave "State" blank and type their district/city directly.
+//
+// This was compiled from general knowledge, not fetched from an official
+// registry, so treat it as "good enough for search filtering" rather than
+// a legally authoritative ISO-3166-2 list. Feel free to edit/extend any
+// entry below — it's just a plain JS object.
+// ---------------------------------------------------------------------
+
+const COUNTRY_STATES_STATIC = {
+  "Afghanistan": ["Kabul","Herat","Kandahar","Balkh","Nangarhar","Kunduz","Helmand","Bamyan","Badakhshan","Ghazni"],
+  "Albania": ["Berat","Diber","Durres","Elbasan","Fier","Gjirokaster","Korce","Kukes","Lezhe","Shkoder","Tirane","Vlore"],
+  "Algeria": ["Algiers","Oran","Constantine","Annaba","Batna","Blida","Setif","Tlemcen","Bejaia","Skikda"],
+  "Andorra": ["Andorra la Vella","Canillo","Encamp","Escaldes-Engordany","La Massana","Ordino","Sant Julia de Loria"],
+  "Angola": ["Luanda","Benguela","Huambo","Huila","Cabinda","Cunene","Malanje","Namibe","Uige","Zaire"],
+  "Antigua and Barbuda": ["Saint John","Saint George","Saint Mary","Saint Paul","Saint Peter","Saint Philip"],
+  "Argentina": ["Buenos Aires","Cordoba","Santa Fe","Mendoza","Tucuman","Entre Rios","Salta","Chaco","Corrientes","Misiones","Santiago del Estero","San Juan","Jujuy","Rio Negro","Formosa","Neuquen","Chubut","San Luis","Catamarca","La Rioja","La Pampa","Santa Cruz","Tierra del Fuego","Ciudad Autonoma de Buenos Aires"],
+  "Armenia": ["Yerevan","Aragatsotn","Ararat","Armavir","Gegharkunik","Kotayk","Lori","Shirak","Syunik","Tavush","Vayots Dzor"],
+  "Australia": ["New South Wales","Victoria","Queensland","Western Australia","South Australia","Tasmania","Australian Capital Territory","Northern Territory"],
+  "Austria": ["Vienna","Lower Austria","Upper Austria","Styria","Tyrol","Carinthia","Salzburg","Vorarlberg","Burgenland"],
+  "Azerbaijan": ["Baku","Ganja","Sumqayit","Absheron","Aran","Daglig Shirvan","Guba-Khachmaz","Lankaran","Nakhchivan","Shaki-Zaqatala"],
+  "Bahamas": ["New Providence","Grand Bahama","Abaco","Andros","Eleuthera","Exuma","Long Island"],
+  "Bahrain": ["Capital","Muharraq","Northern","Southern"],
+  "Bangladesh": ["Dhaka","Chittagong","Khulna","Rajshahi","Sylhet","Barisal","Rangpur","Mymensingh"],
+  "Barbados": ["Christ Church","Saint Andrew","Saint George","Saint James","Saint John","Saint Joseph","Saint Lucy","Saint Michael","Saint Peter","Saint Philip","Saint Thomas"],
+  "Belarus": ["Minsk","Brest","Gomel","Grodno","Mogilev","Vitebsk"],
+  "Belgium": ["Flanders","Wallonia","Brussels-Capital Region"],
+  "Belize": ["Belize","Cayo","Corozal","Orange Walk","Stann Creek","Toledo"],
+  "Benin": ["Alibori","Atacora","Atlantique","Borgou","Collines","Donga","Kouffo","Littoral","Mono","Oueme","Plateau","Zou"],
+  "Bhutan": ["Thimphu","Paro","Punakha","Wangdue Phodrang","Bumthang","Trashigang","Samdrup Jongkhar"],
+  "Bolivia": ["La Paz","Santa Cruz","Cochabamba","Potosi","Chuquisaca","Oruro","Tarija","Beni","Pando"],
+  "Bosnia and Herzegovina": ["Federation of Bosnia and Herzegovina","Republika Srpska","Brcko District"],
+  "Botswana": ["Central","Ghanzi","Kgalagadi","Kgatleng","Kweneng","North-East","North-West","South-East","Southern"],
+  "Brazil": ["Sao Paulo","Rio de Janeiro","Minas Gerais","Bahia","Parana","Rio Grande do Sul","Pernambuco","Ceara","Para","Santa Catarina","Goias","Maranhao","Espirito Santo","Amazonas","Mato Grosso","Paraiba","Distrito Federal","Mato Grosso do Sul","Piaui","Alagoas","Rio Grande do Norte","Sergipe","Rondonia","Tocantins","Acre","Amapa","Roraima"],
+  "Brunei": ["Brunei-Muara","Belait","Tutong","Temburong"],
+  "Bulgaria": ["Sofia","Plovdiv","Varna","Burgas","Ruse","Stara Zagora","Pleven","Sliven","Dobrich","Shumen"],
+  "Burkina Faso": ["Boucle du Mouhoun","Cascades","Centre","Centre-Est","Centre-Nord","Centre-Ouest","Centre-Sud","Est","Hauts-Bassins","Nord","Plateau-Central","Sahel","Sud-Ouest"],
+  "Burundi": ["Bujumbura Mairie","Bujumbura Rural","Gitega","Ngozi","Muyinga","Ruyigi"],
+  "Cabo Verde": ["Santiago","Santo Antao","Sao Vicente","Fogo","Boa Vista","Sal","Maio"],
+  "Cambodia": ["Phnom Penh","Battambang","Siem Reap","Kampong Cham","Kandal","Kampong Speu","Preah Sihanouk"],
+  "Cameroon": ["Adamawa","Centre","East","Far North","Littoral","North","Northwest","South","Southwest","West"],
+  "Canada": ["Ontario","Quebec","British Columbia","Alberta","Manitoba","Saskatchewan","Nova Scotia","New Brunswick","Newfoundland and Labrador","Prince Edward Island","Northwest Territories","Yukon","Nunavut"],
+  "Central African Republic": ["Bangui","Ombella-M'Poko","Nana-Mambere","Mambere-Kadei","Lobaye"],
+  "Chad": ["N'Djamena","Chari-Baguirmi","Logone Occidental","Logone Oriental","Mayo-Kebbi Est","Ouaddai"],
+  "Chile": ["Santiago Metropolitan","Valparaiso","Biobio","Araucania","Los Lagos","Maule","O'Higgins","Coquimbo","Antofagasta","Los Rios","Tarapaca","Atacama","Aysen","Magallanes","Arica y Parinacota","Nuble"],
+  "China": ["Beijing","Shanghai","Guangdong","Jiangsu","Zhejiang","Shandong","Henan","Sichuan","Hubei","Hunan","Anhui","Hebei","Fujian","Shaanxi","Liaoning","Jiangxi","Yunnan","Guangxi","Chongqing","Shanxi","Heilongjiang","Guizhou","Jilin","Gansu","Inner Mongolia","Tianjin","Xinjiang","Hainan","Ningxia","Qinghai","Tibet","Hong Kong","Macau"],
+  "Colombia": ["Bogota","Antioquia","Valle del Cauca","Cundinamarca","Santander","Atlantico","Bolivar","Cordoba","Tolima","Norte de Santander","Boyaca","Nariño","Cauca","Huila","Meta","Cesar","Magdalena","Risaralda","Caldas","Quindio"],
+  "Comoros": ["Grande Comore","Anjouan","Moheli"],
+  "Congo (Republic of the)": ["Brazzaville","Pointe-Noire","Niari","Bouenza","Kouilou"],
+  "Congo (Democratic Republic of the)": ["Kinshasa","Katanga","North Kivu","South Kivu","Kasai","Equateur","Orientale","Bandundu"],
+  "Costa Rica": ["San Jose","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limon"],
+  "Cote d'Ivoire": ["Abidjan","Yamoussoukro","Bas-Sassandra","Comoe","Denguele","Goh-Djiboua","Lacs","Lagunes","Montagnes","Sassandra-Marahoue","Savanes","Vallee du Bandama","Woroba","Zanzan"],
+  "Croatia": ["Zagreb","Split-Dalmatia","Osijek-Baranja","Primorje-Gorski Kotar","Istria","Zadar"],
+  "Cuba": ["Havana","Santiago de Cuba","Holguin","Camaguey","Matanzas","Villa Clara","Pinar del Rio","Cienfuegos"],
+  "Cyprus": ["Nicosia","Limassol","Larnaca","Famagusta","Paphos","Kyrenia"],
+  "Czech Republic": ["Prague","Central Bohemian","South Moravian","Moravian-Silesian","Ustecky","South Bohemian","Plzensky","Hradec Kralove","Pardubice","Vysocina","Olomouc","Zlin","Karlovy Vary","Liberec"],
+  "Denmark": ["Capital Region","Central Denmark","North Denmark","Region of Southern Denmark","Region Zealand"],
+  "Djibouti": ["Djibouti","Ali Sabieh","Dikhil","Tadjourah","Obock","Arta"],
+  "Dominica": ["Saint George","Saint Andrew","Saint David","Saint John","Saint Joseph","Saint Luke","Saint Mark","Saint Patrick","Saint Paul","Saint Peter"],
+  "Dominican Republic": ["Santo Domingo","Santiago","La Vega","San Cristobal","Puerto Plata","La Altagracia"],
+  "Ecuador": ["Guayas","Pichincha","Azuay","Manabi","El Oro","Los Rios","Tungurahua","Loja","Esmeraldas","Chimborazo"],
+  "Egypt": ["Cairo","Giza","Alexandria","Qalyubia","Sharqia","Dakahlia","Gharbia","Beheira","Minya","Assiut","Aswan","Luxor","Suez","Port Said","Ismailia","Faiyum"],
+  "El Salvador": ["San Salvador","Santa Ana","San Miguel","La Libertad","Sonsonate","Usulutan"],
+  "Equatorial Guinea": ["Bioko Norte","Bioko Sur","Litoral","Wele-Nzas","Centro Sur","Kie-Ntem"],
+  "Eritrea": ["Maekel","Anseba","Debub","Gash-Barka","Northern Red Sea","Southern Red Sea"],
+  "Estonia": ["Harju","Tartu","Ida-Viru","Parnu","Laane-Viru","Rapla"],
+  "Eswatini": ["Hhohho","Manzini","Lubombo","Shiselweni"],
+  "Ethiopia": ["Addis Ababa","Oromia","Amhara","Tigray","SNNPR","Somali","Afar","Benishangul-Gumuz","Gambela","Harari","Dire Dawa","Sidama"],
+  "Fiji": ["Central","Western","Northern","Eastern"],
+  "Finland": ["Uusimaa","Pirkanmaa","Southwest Finland","North Ostrobothnia","Central Finland","Lapland","Kanta-Hame","North Karelia"],
+  "France": ["Ile-de-France","Auvergne-Rhone-Alpes","Nouvelle-Aquitaine","Occitanie","Hauts-de-France","Grand Est","Provence-Alpes-Cote d'Azur","Pays de la Loire","Normandie","Bretagne","Bourgogne-Franche-Comte","Centre-Val de Loire","Corse"],
+  "Gabon": ["Estuaire","Haut-Ogooue","Moyen-Ogooue","Ngounie","Nyanga","Ogooue-Ivindo","Ogooue-Lolo","Ogooue-Maritime","Woleu-Ntem"],
+  "Gambia": ["Banjul","Kanifing","Brikama","Mansakonko","Kerewan","Kuntaur","Janjanbureh","Basse"],
+  "Georgia": ["Tbilisi","Adjara","Imereti","Kakheti","Kvemo Kartli","Samegrelo-Zemo Svaneti","Shida Kartli","Guria","Racha-Lechkhumi","Samtskhe-Javakheti","Mtskheta-Mtianeti"],
+  "Germany": ["Bavaria","North Rhine-Westphalia","Baden-Wurttemberg","Lower Saxony","Hesse","Saxony","Berlin","Rhineland-Palatinate","Schleswig-Holstein","Brandenburg","Saxony-Anhalt","Thuringia","Hamburg","Mecklenburg-Vorpommern","Saarland","Bremen"],
+  "Ghana": ["Greater Accra","Ashanti","Western","Eastern","Central","Volta","Northern","Upper East","Upper West","Bono"],
+  "Greece": ["Attica","Central Macedonia","Thessaly","Western Greece","Crete","Central Greece","Peloponnese","Epirus","Eastern Macedonia and Thrace","Western Macedonia","Ionian Islands","North Aegean","South Aegean"],
+  "Grenada": ["Saint George","Saint Andrew","Saint David","Saint John","Saint Mark","Saint Patrick"],
+  "Guatemala": ["Guatemala","Quetzaltenango","Escuintla","Alta Verapaz","Huehuetenango","San Marcos"],
+  "Guinea": ["Conakry","Boke","Faranah","Kankan","Kindia","Labe","Mamou","Nzerekore"],
+  "Guinea-Bissau": ["Bissau","Bafata","Biombo","Bolama","Cacheu","Gabu","Oio","Quinara","Tombali"],
+  "Guyana": ["Demerara-Mahaica","Essequibo Islands-West Demerara","East Berbice-Corentyne","Mahaica-Berbice","Potaro-Siparuni"],
+  "Haiti": ["Ouest","Sud-Est","Nord","Nord-Est","Artibonite","Centre","Sud","Grand'Anse","Nord-Ouest","Nippes"],
+  "Honduras": ["Francisco Morazan","Cortes","Atlantida","Yoro","Choluteca","Comayagua"],
+  "Hungary": ["Budapest","Pest","Borsod-Abauj-Zemplen","Szabolcs-Szatmar-Bereg","Hajdu-Bihar","Bacs-Kiskun","Csongrad","Fejer","Gyor-Moson-Sopron","Baranya"],
+  "Iceland": ["Capital Region","Southern Peninsula","Western","Westfjords","Northwestern","Northeastern","Eastern","Southern"],
+  "India": ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir","Ladakh","Puducherry","Chandigarh","Andaman and Nicobar Islands"],
+  "Indonesia": ["Jakarta","West Java","East Java","Central Java","North Sumatra","Banten","South Sulawesi","South Sumatra","Lampung","Bali","West Sumatra","Riau","East Kalimantan","West Kalimantan","South Kalimantan","Aceh","Papua","Yogyakarta"],
+  "Iran": ["Tehran","Isfahan","Fars","Khorasan Razavi","East Azerbaijan","West Azerbaijan","Khuzestan","Mazandaran","Gilan","Kerman","Yazd","Qom","Kermanshah","Hormozgan"],
+  "Iraq": ["Baghdad","Basra","Nineveh","Erbil","Sulaymaniyah","Kirkuk","Najaf","Karbala","Anbar","Duhok"],
+  "Ireland": ["Leinster","Munster","Connacht","Ulster (Republic part)"],
+  "Israel": ["Jerusalem","Tel Aviv","Haifa","Central","Southern","Northern"],
+  "Italy": ["Lombardy","Lazio","Campania","Sicily","Veneto","Emilia-Romagna","Piedmont","Puglia","Tuscany","Calabria","Sardinia","Liguria","Marche","Abruzzo","Friuli-Venezia Giulia","Trentino-Alto Adige","Umbria","Basilicata","Molise","Valle d'Aosta"],
+  "Jamaica": ["Kingston","Saint Andrew","Saint Catherine","Clarendon","Saint James","Manchester"],
+  "Japan": ["Tokyo","Osaka","Kanagawa","Aichi","Saitama","Chiba","Hyogo","Hokkaido","Fukuoka","Shizuoka","Kyoto","Ibaraki","Hiroshima","Miyagi","Niigata","Nagano","Gifu","Okayama","Kumamoto","Okinawa"],
+  "Jordan": ["Amman","Irbid","Zarqa","Balqa","Mafraq","Karak","Aqaba"],
+  "Kazakhstan": ["Almaty","Astana","Shymkent","Almaty Region","Turkistan","East Kazakhstan","Karaganda","Pavlodar"],
+  "Kenya": ["Nairobi","Mombasa","Kisumu","Nakuru","Kiambu","Machakos","Uasin Gishu","Kakamega"],
+  "Kiribati": ["Gilbert Islands","Line Islands","Phoenix Islands"],
+  "Kosovo": ["Pristina","Peja","Prizren","Gjilan","Mitrovica","Ferizaj","Gjakova"],
+  "Kuwait": ["Al Asimah","Hawalli","Farwaniya","Mubarak Al-Kabeer","Ahmadi","Jahra"],
+  "Kyrgyzstan": ["Bishkek","Osh","Chuy","Jalal-Abad","Batken","Naryn","Talas","Issyk-Kul"],
+  "Laos": ["Vientiane","Savannakhet","Champasak","Luang Prabang","Xieng Khouang"],
+  "Latvia": ["Riga","Daugavpils","Liepaja","Jelgava","Ventspils","Jurmala"],
+  "Lebanon": ["Beirut","Mount Lebanon","North","South","Bekaa","Nabatieh","Akkar","Baalbek-Hermel"],
+  "Lesotho": ["Maseru","Berea","Leribe","Mafeteng","Mohale's Hoek","Quthing","Butha-Buthe","Mokhotlong","Qacha's Nek","Thaba-Tseka"],
+  "Liberia": ["Montserrado","Nimba","Bong","Lofa","Grand Bassa","Margibi"],
+  "Libya": ["Tripoli","Benghazi","Misrata","Sabha","Zawiya","Al Bayda"],
+  "Liechtenstein": ["Vaduz","Schaan","Balzers","Triesen","Eschen"],
+  "Lithuania": ["Vilnius","Kaunas","Klaipeda","Siauliai","Panevezys"],
+  "Luxembourg": ["Luxembourg","Diekirch","Grevenmacher"],
+  "Madagascar": ["Antananarivo","Antsiranana","Fianarantsoa","Mahajanga","Toamasina","Toliara"],
+  "Malawi": ["Central","Northern","Southern"],
+  "Malaysia": ["Selangor","Johor","Kuala Lumpur","Penang","Sabah","Sarawak","Perak","Kedah","Pahang","Negeri Sembilan","Malacca","Terengganu","Kelantan","Perlis"],
+  "Maldives": ["Male","Addu","Fuvahmulah"],
+  "Mali": ["Bamako","Kayes","Koulikoro","Sikasso","Segou","Mopti","Tombouctou","Gao","Kidal"],
+  "Malta": ["Valletta","Gozo"],
+  "Marshall Islands": ["Majuro","Kwajalein","Arno"],
+  "Mauritania": ["Nouakchott","Nouadhibou","Trarza","Adrar","Assaba"],
+  "Mauritius": ["Port Louis","Plaines Wilhems","Pamplemousses","Riviere du Rempart","Grand Port","Flacq","Rodrigues"],
+  "Mexico": ["Mexico City","Jalisco","Nuevo Leon","Puebla","Guanajuato","Veracruz","Chihuahua","Baja California","Sonora","Coahuila","Yucatan","Quintana Roo","Michoacan","Oaxaca","Chiapas","Sinaloa","Tamaulipas","Guerrero","Estado de Mexico","Queretaro"],
+  "Micronesia": ["Chuuk","Kosrae","Pohnpei","Yap"],
+  "Moldova": ["Chisinau","Balti","Cahul","Orhei","Ungheni","Gagauzia"],
+  "Monaco": ["Monaco-Ville","Monte Carlo","La Condamine","Fontvieille"],
+  "Mongolia": ["Ulaanbaatar","Darkhan-Uul","Orkhon","Tuv","Selenge","Khentii"],
+  "Montenegro": ["Podgorica","Niksic","Bar","Herceg Novi","Bijelo Polje","Cetinje"],
+  "Morocco": ["Casablanca-Settat","Rabat-Sale-Kenitra","Marrakesh-Safi","Fes-Meknes","Tanger-Tetouan-Al Hoceima","Oriental","Souss-Massa","Beni Mellal-Khenifra","Draa-Tafilalet","Guelmim-Oued Noun","Laayoune-Sakia El Hamra","Eddakhla-Oued Ed-Dahab"],
+  "Mozambique": ["Maputo","Gaza","Inhambane","Sofala","Manica","Tete","Zambezia","Nampula","Cabo Delgado","Niassa"],
+  "Myanmar": ["Yangon","Mandalay","Naypyidaw","Shan","Ayeyarwady","Bago","Sagaing","Mon","Rakhine","Kachin"],
+  "Namibia": ["Khomas","Erongo","Oshana","Otjozondjupa","Karas","Kavango East","Zambezi"],
+  "Nauru": ["Yaren","Aiwo","Denigomodu"],
+  "Nepal": ["Bagmati","Gandaki","Koshi","Lumbini","Madhesh","Karnali","Sudurpashchim"],
+  "Netherlands": ["North Holland","South Holland","Utrecht","North Brabant","Gelderland","Limburg","Overijssel","Friesland","Groningen","Drenthe","Flevoland","Zeeland"],
+  "New Zealand": ["Auckland","Wellington","Canterbury","Waikato","Bay of Plenty","Otago","Manawatu-Whanganui","Northland"],
+  "Nicaragua": ["Managua","Leon","Chinandega","Granada","Masaya","Esteli"],
+  "Niger": ["Niamey","Agadez","Diffa","Dosso","Maradi","Tahoua","Tillaberi","Zinder"],
+  "Nigeria": ["Lagos","Kano","Kaduna","Rivers","Oyo","Katsina","Ogun","Enugu","Delta","Edo","Plateau","Cross River","Borno","Abuja Federal Capital Territory","Anambra","Imo","Akwa Ibom"],
+  "North Korea": ["Pyongyang","North Hamgyong","South Hamgyong","North Pyongan","South Pyongan","North Hwanghae","South Hwanghae","Kangwon"],
+  "North Macedonia": ["Skopje","Bitola","Kumanovo","Prilep","Tetovo","Ohrid"],
+  "Norway": ["Oslo","Viken","Vestland","Trondelag","Rogaland","Innlandet","Agder","More og Romsdal","Nordland","Troms og Finnmark","Vestfold og Telemark"],
+  "Oman": ["Muscat","Dhofar","Al Batinah","Al Dakhiliyah","Al Sharqiyah","Musandam","Al Buraimi"],
+  "Pakistan": ["Punjab","Sindh","Khyber Pakhtunkhwa","Balochistan","Gilgit-Baltistan","Azad Kashmir","Islamabad Capital Territory"],
+  "Palau": ["Koror","Airai","Ngerulmud"],
+  "Palestine": ["Gaza","West Bank","Jerusalem","Ramallah","Hebron","Nablus"],
+  "Panama": ["Panama","Colon","Chiriqui","Veraguas","Los Santos","Herrera"],
+  "Papua New Guinea": ["National Capital District","Morobe","Western Highlands","East New Britain","Madang"],
+  "Paraguay": ["Asuncion","Central","Alto Parana","Itapua","Caaguazu","San Pedro"],
+  "Peru": ["Lima","Arequipa","La Libertad","Piura","Cusco","Lambayeque","Junin","Callao","Ancash","Cajamarca"],
+  "Philippines": ["Metro Manila","Cebu","Davao","Calabarzon","Central Luzon","Western Visayas","Bicol","Ilocos","Northern Mindanao","Central Visayas","Soccsksargen"],
+  "Poland": ["Masovian","Silesian","Greater Poland","Lesser Poland","Lower Silesian","Lodz","Pomeranian","West Pomeranian","Lublin","Subcarpathian","Kuyavian-Pomeranian","Warmian-Masurian","Podlaskie","Swietokrzyskie","Opole","Lubusz"],
+  "Portugal": ["Lisbon","Porto","Braga","Setubal","Aveiro","Coimbra","Faro","Leiria","Madeira","Azores"],
+  "Qatar": ["Doha","Al Rayyan","Al Wakrah","Al Khor","Umm Salal","Al Shamal"],
+  "Romania": ["Bucharest","Cluj","Timis","Iasi","Constanta","Brasov","Prahova","Dolj","Arges","Bihor"],
+  "Russia": ["Moscow","Saint Petersburg","Moscow Oblast","Krasnodar Krai","Sverdlovsk Oblast","Novosibirsk Oblast","Tatarstan","Chelyabinsk Oblast","Nizhny Novgorod Oblast","Bashkortostan","Rostov Oblast","Samara Oblast","Krasnoyarsk Krai","Primorsky Krai","Voronezh Oblast"],
+  "Rwanda": ["Kigali","Northern","Southern","Eastern","Western"],
+  "Saint Kitts and Nevis": ["Saint Kitts","Nevis"],
+  "Saint Lucia": ["Castries","Gros Islet","Vieux Fort","Soufriere","Micoud"],
+  "Saint Vincent and the Grenadines": ["Kingstown","Georgetown","Layou","Barrouallie"],
+  "Samoa": ["Upolu","Savai'i"],
+  "San Marino": ["San Marino Citta","Serravalle","Borgo Maggiore","Domagnano"],
+  "Sao Tome and Principe": ["Sao Tome","Principe"],
+  "Saudi Arabia": ["Riyadh","Makkah","Eastern Province","Madinah","Asir","Jazan","Tabuk","Qassim","Hail","Najran"],
+  "Senegal": ["Dakar","Thies","Diourbel","Saint-Louis","Kaolack","Ziguinchor","Tambacounda","Louga"],
+  "Serbia": ["Belgrade","Vojvodina","Sumadija","Central Serbia","Nis"],
+  "Seychelles": ["Mahe","Praslin","La Digue"],
+  "Sierra Leone": ["Western Area","Northern","Southern","Eastern","North West"],
+  "Singapore": ["Central Region","East Region","North Region","North-East Region","West Region"],
+  "Slovakia": ["Bratislava","Kosice","Presov","Zilina","Nitra","Trnava","Trencin","Banska Bystrica"],
+  "Slovenia": ["Ljubljana","Maribor","Celje","Kranj","Koper","Novo Mesto"],
+  "Solomon Islands": ["Guadalcanal","Malaita","Western","Honiara"],
+  "Somalia": ["Banaadir","Puntland","Jubaland","Galmudug","South West","Hirshabelle"],
+  "South Africa": ["Gauteng","KwaZulu-Natal","Western Cape","Eastern Cape","Limpopo","Mpumalanga","North West","Free State","Northern Cape"],
+  "South Korea": ["Seoul","Busan","Incheon","Daegu","Daejeon","Gwangju","Gyeonggi","Gyeongsangnam","Gyeongsangbuk","Jeollanam","Chungcheongnam","Jeju"],
+  "South Sudan": ["Central Equatoria","Jonglei","Upper Nile","Unity","Warrap","Lakes","Western Equatoria","Eastern Equatoria","Northern Bahr el Ghazal","Western Bahr el Ghazal"],
+  "Spain": ["Madrid","Catalonia","Andalusia","Valencia","Galicia","Castile and Leon","Basque Country","Canary Islands","Castilla-La Mancha","Murcia","Aragon","Extremadura","Balearic Islands","Asturias","Navarre","Cantabria","La Rioja"],
+  "Sri Lanka": ["Western","Central","Southern","Northern","Eastern","North Western","North Central","Uva","Sabaragamuwa"],
+  "Sudan": ["Khartoum","Kassala","Gezira","Red Sea","North Darfur","South Darfur","North Kordofan"],
+  "Suriname": ["Paramaribo","Wanica","Nickerie","Commewijne"],
+  "Sweden": ["Stockholm","Vastra Gotaland","Skane","Uppsala","Ostergotland","Jonkoping","Halland","Orebro"],
+  "Switzerland": ["Zurich","Bern","Vaud","Geneva","Aargau","Basel-Stadt","Lucerne","Ticino","St. Gallen","Valais","Fribourg"],
+  "Syria": ["Damascus","Aleppo","Homs","Hama","Latakia","Idlib","Daraa","Deir ez-Zor","Al-Hasakah","Raqqa"],
+  "Taiwan": ["Taipei","New Taipei","Taichung","Tainan","Kaohsiung","Taoyuan","Hsinchu"],
+  "Tajikistan": ["Dushanbe","Sughd","Khatlon","Gorno-Badakhshan"],
+  "Tanzania": ["Dar es Salaam","Arusha","Mwanza","Dodoma","Zanzibar","Kilimanjaro","Mbeya","Morogoro"],
+  "Thailand": ["Bangkok","Chiang Mai","Nonthaburi","Chonburi","Nakhon Ratchasima","Khon Kaen","Phuket","Songkhla"],
+  "Timor-Leste": ["Dili","Baucau","Bobonaro","Viqueque"],
+  "Togo": ["Maritime","Plateaux","Centrale","Kara","Savanes"],
+  "Tonga": ["Tongatapu","Vava'u","Ha'apai","Eua"],
+  "Trinidad and Tobago": ["Port of Spain","San Fernando","Chaguanas","Tunapuna-Piarco","Tobago"],
+  "Tunisia": ["Tunis","Sfax","Sousse","Kairouan","Bizerte","Gabes","Nabeul"],
+  "Turkey": ["Istanbul","Ankara","Izmir","Bursa","Antalya","Adana","Konya","Gaziantep","Mersin","Diyarbakir"],
+  "Turkmenistan": ["Ashgabat","Ahal","Balkan","Dashoguz","Lebap","Mary"],
+  "Tuvalu": ["Funafuti","Vaitupu","Nanumea"],
+  "Uganda": ["Kampala","Wakiso","Mukono","Jinja","Mbale","Mbarara","Gulu"],
+  "Ukraine": ["Kyiv","Kharkiv","Odesa","Dnipropetrovsk","Donetsk","Lviv","Zaporizhzhia","Kryvyi Rih"],
+  "United Arab Emirates": ["Abu Dhabi","Dubai","Sharjah","Ajman","Umm Al Quwain","Ras Al Khaimah","Fujairah"],
+  "United Kingdom": ["England","Scotland","Wales","Northern Ireland"],
+  "United States": ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming","District of Columbia"],
+  "Uruguay": ["Montevideo","Canelones","Maldonado","Salto","Paysandu","Colonia"],
+  "Uzbekistan": ["Tashkent","Samarkand","Bukhara","Andijan","Fergana","Namangan","Karakalpakstan"],
+  "Vanuatu": ["Shefa","Sanma","Tafea","Malampa","Penama","Torba"],
+  "Vatican City": [],
+  "Venezuela": ["Caracas (Distrito Capital)","Zulia","Miranda","Carabobo","Lara","Aragua","Bolivar","Tachira","Anzoategui"],
+  "Vietnam": ["Hanoi","Ho Chi Minh City","Da Nang","Hai Phong","Can Tho","Binh Duong","Dong Nai"],
+  "Yemen": ["Sanaa","Aden","Taiz","Hodeidah","Hadhramaut","Ibb"],
+  "Zambia": ["Lusaka","Copperbelt","Central","Eastern","Southern","Northern","Western","Luapula","North-Western","Muchinga"],
+  "Zimbabwe": ["Harare","Bulawayo","Manicaland","Mashonaland Central","Mashonaland East","Mashonaland West","Masvingo","Matabeleland North","Matabeleland South","Midlands"]
+};
+
+// ---------------------------------------------------------------------
+// District-level data for India, keyed by state (must match the state
+// names used in COUNTRY_STATES_STATIC.India above).
+//
+// This solves the "how do I know it's spelled/named that way" problem --
+// instead of typing a district name and hoping it matches (Trivandrum vs
+// Thiruvananthapuram vs TVM), the person picks from a real list, and the
+// common alternate name is shown right next to it so it's recognizable.
+// The dropdown's underlying value is always the canonical district name;
+// the backend separately knows the common aliases too, so a listing that
+// says "Trivandrum" still matches a "Thiruvananthapuram" filter either way.
+//
+// Coverage: major/commonly-searched districts per state, not necessarily
+// the full official count for every state (some states have had recent
+// district splits) -- good enough for search filtering, not a legal list.
+// Where a district commonly goes by another name, that's noted in [].
+// ---------------------------------------------------------------------
+const DISTRICTS_INDIA = {
+  "Kerala": [
+    ["Thiruvananthapuram", "Trivandrum, TVM"], ["Kollam", "Quilon"], ["Pathanamthitta", ""],
+    ["Alappuzha", "Alleppey"], ["Kottayam", ""], ["Idukki", ""], ["Ernakulam", "Kochi, Cochin"],
+    ["Thrissur", "Trichur"], ["Palakkad", "Palghat"], ["Malappuram", ""], ["Kozhikode", "Calicut"],
+    ["Wayanad", ""], ["Kannur", "Cannanore"], ["Kasaragod", ""]
+  ],
+  "Karnataka": [
+    ["Bengaluru Urban", "Bangalore, Bengaluru"], ["Bengaluru Rural", "Bangalore Rural"], ["Mysuru", "Mysore"],
+    ["Dakshina Kannada", "Mangalore, Mangaluru"], ["Belagavi", "Belgaum"], ["Hubballi-Dharwad", "Hubli-Dharwad"],
+    ["Kalaburagi", "Gulbarga"], ["Ballari", "Bellary"], ["Shivamogga", "Shimoga"], ["Tumakuru", "Tumkur"],
+    ["Udupi", ""], ["Vijayapura", "Bijapur"], ["Davanagere", ""], ["Bidar", ""], ["Chikkamagaluru", "Chikmagalur"]
+  ],
+  "Tamil Nadu": [
+    ["Chennai", "Madras"], ["Coimbatore", ""], ["Madurai", ""], ["Tiruchirappalli", "Trichy, Tiruchi"],
+    ["Salem", ""], ["Tirunelveli", ""], ["Thanjavur", "Tanjore"], ["Vellore", ""], ["Erode", ""],
+    ["Tiruppur", ""], ["Kanchipuram", ""], ["Cuddalore", ""]
+  ],
+  "Maharashtra": [
+    ["Mumbai City", "Bombay"], ["Mumbai Suburban", "Bombay"], ["Pune", "Poona"], ["Nagpur", ""],
+    ["Thane", ""], ["Nashik", ""], ["Aurangabad", "Chhatrapati Sambhajinagar"], ["Solapur", ""],
+    ["Kolhapur", ""], ["Amravati", ""], ["Nanded", ""], ["Raigad", ""]
+  ],
+  "Telangana": [
+    ["Hyderabad", ""], ["Rangareddy", ""], ["Medchal-Malkajgiri", ""], ["Warangal Urban", "Warangal"],
+    ["Nizamabad", ""], ["Karimnagar", ""], ["Khammam", ""], ["Nalgonda", ""], ["Mahbubnagar", ""]
+  ],
+  "Andhra Pradesh": [
+    ["Visakhapatnam", "Vizag, Vishakhapatnam"], ["Vijayawada (NTR)", "Vijayawada"], ["Guntur", ""],
+    ["Krishna", ""], ["Chittoor", ""], ["Nellore (SPSR)", "Nellore"], ["Kurnool", ""], ["Anantapur", ""],
+    ["West Godavari", ""], ["East Godavari", ""]
+  ],
+  "Delhi": [
+    ["New Delhi", ""], ["North Delhi", ""], ["South Delhi", ""], ["East Delhi", ""], ["West Delhi", ""],
+    ["Central Delhi", ""], ["North East Delhi", ""], ["North West Delhi", ""], ["South East Delhi", ""],
+    ["South West Delhi", ""], ["Shahdara", ""]
+  ],
+  "West Bengal": [
+    ["Kolkata", "Calcutta"], ["Howrah", ""], ["North 24 Parganas", ""], ["South 24 Parganas", ""],
+    ["Hooghly", ""], ["Nadia", ""], ["Darjeeling", ""], ["Purba Bardhaman", "Burdwan"], ["Malda", ""]
+  ],
+  "Gujarat": [
+    ["Ahmedabad", ""], ["Surat", ""], ["Vadodara", "Baroda"], ["Rajkot", ""], ["Bhavnagar", ""],
+    ["Jamnagar", ""], ["Gandhinagar", ""], ["Junagadh", ""], ["Anand", ""]
+  ],
+  "Rajasthan": [
+    ["Jaipur", ""], ["Jodhpur", ""], ["Udaipur", ""], ["Kota", ""], ["Ajmer", ""], ["Bikaner", ""],
+    ["Alwar", ""], ["Bharatpur", ""], ["Sikar", ""]
+  ],
+  "Uttar Pradesh": [
+    ["Lucknow", ""], ["Kanpur Nagar", "Kanpur"], ["Ghaziabad", ""], ["Agra", ""], ["Varanasi", "Banaras, Kashi"],
+    ["Prayagraj", "Allahabad"], ["Meerut", ""], ["Noida (Gautam Buddha Nagar)", "Noida"], ["Bareilly", ""],
+    ["Aligarh", ""], ["Moradabad", ""], ["Gorakhpur", ""]
+  ],
+  "Madhya Pradesh": [
+    ["Indore", ""], ["Bhopal", ""], ["Jabalpur", ""], ["Gwalior", ""], ["Ujjain", ""], ["Sagar", ""],
+    ["Rewa", ""], ["Satna", ""]
+  ],
+  "Bihar": [
+    ["Patna", ""], ["Gaya", ""], ["Bhagalpur", ""], ["Muzaffarpur", ""], ["Darbhanga", ""], ["Purnia", ""],
+    ["Begusarai", ""], ["Nalanda", ""]
+  ],
+  "Punjab": [
+    ["Ludhiana", ""], ["Amritsar", ""], ["Jalandhar", ""], ["Patiala", ""], ["Bathinda", ""], ["Mohali", "SAS Nagar"]
+  ],
+  "Haryana": [
+    ["Gurugram", "Gurgaon"], ["Faridabad", ""], ["Panipat", ""], ["Ambala", ""], ["Hisar", ""], ["Karnal", ""],
+    ["Rohtak", ""], ["Sonipat", ""]
+  ],
+  "Odisha": [
+    ["Khordha (Bhubaneswar)", "Bhubaneswar"], ["Cuttack", ""], ["Ganjam", ""], ["Sundargarh", ""],
+    ["Puri", ""], ["Sambalpur", ""]
+  ],
+  "Assam": [
+    ["Kamrup Metropolitan", "Guwahati, Gauhati"], ["Dibrugarh", ""], ["Jorhat", ""], ["Silchar (Cachar)", "Silchar"],
+    ["Nagaon", ""], ["Tinsukia", ""]
+  ],
+  "Jharkhand": [
+    ["Ranchi", ""], ["Jamshedpur (East Singhbhum)", "Jamshedpur"], ["Dhanbad", ""], ["Bokaro", ""], ["Hazaribagh", ""]
+  ],
+  "Chhattisgarh": [
+    ["Raipur", ""], ["Bilaspur", ""], ["Durg", ""], ["Bastar (Jagdalpur)", "Jagdalpur"], ["Korba", ""]
+  ],
+  "Puducherry": [
+    ["Puducherry", "Pondicherry"], ["Karaikal", ""], ["Mahe", ""], ["Yanam", ""]
+  ],
+  "Chandigarh": [["Chandigarh", ""]],
+  "Goa": [["North Goa", ""], ["South Goa", ""]],
+  "Uttarakhand": [
+    ["Dehradun", ""], ["Haridwar", ""], ["Nainital", ""], ["Udham Singh Nagar", ""]
+  ],
+  "Himachal Pradesh": [
+    ["Shimla", ""], ["Kangra", ""], ["Solan", ""], ["Mandi", ""]
+  ],
+  "Jammu and Kashmir": [
+    ["Srinagar", ""], ["Jammu", ""], ["Anantnag", ""], ["Baramulla", ""]
+  ]
+};
+
+</script>
+<script>
+// ---------------------------------------------------------------------
+// Config
+// ---------------------------------------------------------------------
+const API_BASE = "http://127.0.0.1:8000";
+
+// Country/state data now comes straight from the offline COUNTRY_STATES_STATIC
+// object defined in locations-data.js — no network call, no "Failed to fetch".
+
+// Copy per tab
+const MODE_TEXT = {
+  jobs: {
+    eyebrow: "One search. Every platform.",
+    title: "Stop tab-hopping between job boards.",
+    sub: "NexusForge scans live openings from Remotive, Arbeitnow, RemoteOK and The Muse, ranks them against your role, skills and experience, and hands you a shortlist worth your time.",
+    roleLabel: "Desired role",
+    rolePlaceholder: "e.g. Python Developer",
+    searchBtn: "Find a job →",
+    resultsNoun: "opening",
+    heroImage: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1800&q=80&auto=format&fit=crop"
+  },
+  internships: {
+    eyebrow: "For students & early-career talent",
+    title: "Find internships worth applying to.",
+    sub: "The same live feeds, filtered toward internship-tagged roles, with a direct line to Internshala for India-specific listings and a shortlist ranked by fit.",
+    roleLabel: "Desired internship role",
+    rolePlaceholder: "e.g. Marketing Intern",
+    searchBtn: "Find an internship →",
+    resultsNoun: "internship",
+    heroImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1800&q=80&auto=format&fit=crop"
+  },
+  workshops: {
+    eyebrow: "Invest in a new skill",
+    title: "Find workshops & skill sessions.",
+    sub: "No open API covers workshop listings yet, so NexusForge takes you straight to a pre-filled, ready-to-run search on the platforms that host them.",
+    roleLabel: "Workshop topic",
+    rolePlaceholder: "e.g. UI/UX Design",
+    searchBtn: "Find workshops →",
+    resultsNoun: "workshop",
+    heroImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1800&q=80&auto=format&fit=crop"
+  }
+};
+
+let currentMode = "jobs";
+
+// ---------------------------------------------------------------------
+// Location dropdowns
+// ---------------------------------------------------------------------
+const countrySel = document.getElementById("country");
+const stateSel = document.getElementById("state");
+const districtInput = document.getElementById("district");
+const districtSelect = document.getElementById("district-select");
+const districtList = document.getElementById("district-list");
+const workModeSel = document.getElementById("work-mode");
+
+function fillSelect(select, options) {
+  select.innerHTML = "";
+  options.forEach(opt => {
+    const el = document.createElement("option");
+    el.value = opt;
+    el.textContent = opt;
+    select.appendChild(el);
+  });
+}
+
+function getDistrictValue() {
+  return districtSelect.hidden ? districtInput.value : districtSelect.value;
+}
+
+function initLocationData() {
+  const countries = Object.keys(COUNTRY_STATES_STATIC).sort((a, b) => a.localeCompare(b));
+  fillSelect(countrySel, countries);
+  if (countries.includes("India")) countrySel.value = "India";
+  refreshStates();
+}
+
+function refreshStates() {
+  const states = COUNTRY_STATES_STATIC[countrySel.value] || [];
+  fillSelect(stateSel, states);
+  refreshDistricts();
+}
+
+function refreshDistricts() {
+  // Real district-level choices exist for India -- show a proper dropdown
+  // with the common alternate name alongside so it's easy to recognize
+  // (e.g. "Thiruvananthapuram (Trivandrum, TVM)"), instead of asking the
+  // person to guess spelling. Everywhere else we don't have district-level
+  // data, so fall back to the free-text field.
+  const districts = (countrySel.value === "India" && DISTRICTS_INDIA[stateSel.value]) || null;
+
+  if (districts) {
+    districtSelect.innerHTML = "";
+    const blank = document.createElement("option");
+    blank.value = "";
+    blank.textContent = "Any district";
+    districtSelect.appendChild(blank);
+    districts.forEach(([name, aliases]) => {
+      const el = document.createElement("option");
+      el.value = name;
+      el.textContent = aliases ? `${name} (${aliases})` : name;
+      districtSelect.appendChild(el);
+    });
+    districtSelect.hidden = false;
+    districtInput.hidden = true;
+    districtInput.value = "";
+  } else {
+    districtSelect.hidden = true;
+    districtInput.hidden = false;
+    districtInput.value = "";
+    districtInput.placeholder = stateSel.options.length
+      ? "e.g. your district or city"
+      : "e.g. your district or city (no states listed for this country)";
+  }
+}
+
+initLocationData();
+countrySel.addEventListener("change", refreshStates);
+stateSel.addEventListener("change", refreshDistricts);
+
+function setLocationDisabled(disabled) {
+  [countrySel, stateSel, districtInput, districtSelect].forEach(el => el.disabled = disabled);
+}
+workModeSel.addEventListener("change", () => {
+  // Location stays choosable even for Remote: plenty of "remote" roles are
+  // still restricted to a country/region, so place is still useful to specify.
+  setLocationDisabled(false);
+});
+
+
+// ---------------------------------------------------------------------
+// Resume upload — sends the PDF to the backend, which extracts text and
+// matches it against a skills vocabulary, then auto-fills the Skills field.
+// ---------------------------------------------------------------------
+const resumeInput = document.getElementById("resume-file");
+const resumeStatus = document.getElementById("resume-status");
+
+resumeInput.addEventListener("change", async () => {
+  const file = resumeInput.files[0];
+  if (!file) return;
+
+  if (file.type !== "application/pdf") {
+    resumeStatus.textContent = "Please upload a PDF file.";
+    resumeStatus.className = "resume-status err";
+    return;
+  }
+
+  resumeStatus.textContent = "Reading resume…";
+  resumeStatus.className = "resume-status";
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/resume/parse`, { method: "POST", body: formData });
+    if (!res.ok) throw new Error(`Server returned ${res.status}`);
+    const data = await res.json();
+
+    if (data.matched_skills && data.matched_skills.length) {
+      document.getElementById("skills").value = data.matched_skills.join(", ");
+      resumeStatus.textContent = `Found ${data.matched_skills.length} skill${data.matched_skills.length === 1 ? "" : "s"} — added to the Skills field.`;
+      resumeStatus.className = "resume-status ok";
+    } else {
+      resumeStatus.textContent = "Resume read, but no matching skills were found — add them manually.";
+      resumeStatus.className = "resume-status err";
+    }
+  } catch (err) {
+    resumeStatus.textContent = "Couldn't read that resume. Make sure the backend is running.";
+    resumeStatus.className = "resume-status err";
+  }
+});
+
+// ---------------------------------------------------------------------
+// Download results as PDF — uses the browser's native print-to-PDF
+// (no external library needed). Print CSS above hides everything except
+// the results section when this fires.
+// ---------------------------------------------------------------------
+document.getElementById("download-pdf-btn").addEventListener("click", () => {
+  window.print();
+});
+
+// ---------------------------------------------------------------------
+// Tab switching (Jobs / Internships / Workshops)
+// ---------------------------------------------------------------------
+document.getElementById("mode-tabs").addEventListener("click", (e) => {
+  const btn = e.target.closest(".mode-tab");
+  if (!btn) return;
+  document.querySelectorAll(".mode-tab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  currentMode = btn.dataset.mode;
+
+  const t = MODE_TEXT[currentMode];
+  document.getElementById("hero-eyebrow").textContent = t.eyebrow;
+  document.getElementById("hero-title").textContent = t.title;
+  document.getElementById("hero-sub").textContent = t.sub;
+  document.getElementById("role-label").textContent = t.roleLabel;
+  document.getElementById("role").placeholder = t.rolePlaceholder;
+  document.getElementById("search-btn").textContent = t.searchBtn;
+  document.getElementById("experience-field").style.display = currentMode === "workshops" ? "none" : "flex";
+  document.body.style.setProperty("--hero-image", `url('${MODE_TEXT[currentMode].heroImage}')`);
+  document.querySelector(".hero").style.backgroundImage =
+    `linear-gradient(120deg, rgba(11,29,58,0.92) 0%, rgba(11,29,58,0.72) 55%, rgba(11,29,58,0.55) 100%), url('${MODE_TEXT[currentMode].heroImage}')`;
+
+  document.getElementById("results").hidden = true;
+});
+
+// ---------------------------------------------------------------------
+// Workshop deep links (built entirely client-side — no live API exists
+// for workshop listings, same limitation as LinkedIn/Naukri for jobs)
+// ---------------------------------------------------------------------
+function buildWorkshopLinks(topic, locationLabel) {
+  const q = encodeURIComponent(topic);
+  const loc = encodeURIComponent(locationLabel || "");
+  return [
+    { platform: "Eventbrite", note: "Local & online workshops, ticketed events, hands-on sessions.", url: `https://www.eventbrite.com/d/${loc || "online"}/${q}/` },
+    { platform: "Meetup", note: "Community-run workshops and skill-sharing groups near you.", url: `https://www.meetup.com/find/?keywords=${q}` },
+    { platform: "Skillshare", note: "Structured, self-paced creative & professional skill classes.", url: `https://www.skillshare.com/en/search?query=${q}` },
+    { platform: "Internshala Trainings", note: "India-focused certification workshops and short courses.", url: `https://trainings.internshala.com/${q.toLowerCase()}-training/` }
+  ];
+}
+
+// ---------------------------------------------------------------------
+// Source logos — mapped by domain so every card (live listing or deep
+// link) shows the real platform mark instead of plain text.
+// ---------------------------------------------------------------------
+const PLATFORM_DOMAINS = {
+  "Remotive": "remotive.com",
+  "Arbeitnow": "arbeitnow.com",
+  "RemoteOK": "remoteok.com",
+  "The Muse": "themuse.com",
+  "LinkedIn": "linkedin.com",
+  "Naukri": "naukri.com",
+  "Indeed": "indeed.com",
+  "Internshala": "internshala.com",
+  "Eventbrite": "eventbrite.com",
+  "Meetup": "meetup.com",
+  "Skillshare": "skillshare.com",
+  "Internshala Trainings": "internshala.com"
+};
+function logoUrl(platformName) {
+  const domain = PLATFORM_DOMAINS[platformName];
+  return domain ? `https://logo.clearbit.com/${domain}?size=80` : "";
+}
+
+// ---------------------------------------------------------------------
+// Job category detection — gives each card a banner that visually
+// reflects the *type* of work (tech, design, marketing, etc.) rather
+// than a generic look for every listing.
+// ---------------------------------------------------------------------
+const CATEGORY_RULES = [
+  { key: "tech", label: "Technology & Engineering",
+    keywords: ["developer", "engineer", "software", "programmer", "backend", "frontend", "full stack",
+               "devops", "cloud", "data scientist", "machine learning", "qa", "sre", "python", "java",
+               "javascript", "cybersecurity", "network"],
+    icon: `<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 9l-2.5 3L8 15M16 9l2.5 3L16 15M13.5 7.5l-3 9" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` },
+  { key: "design", label: "Design & Creative",
+    keywords: ["designer", "ui/ux", "ux", "ui ", "graphic", "figma", "illustrator", "photoshop", "creative"],
+    icon: `<path d="M4 20l3-1 10-10-2-2L5 17l-1 3zM14 6l2-2 2 2-2 2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>` },
+  { key: "marketing", label: "Marketing & Growth",
+    keywords: ["marketing", "seo", "social media", "brand", "growth", "content writ", "campaign", "digital marketing"],
+    icon: `<path d="M4 10v4h4l5 4V6l-5 4H4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M17 9a4 4 0 010 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>` },
+  { key: "data", label: "Data & Analytics",
+    keywords: ["data analy", "data science", "business intelligence", "power bi", "tableau", "sql", "analytics", "data engineer"],
+    icon: `<path d="M5 19V10M11 19V5M17 19v-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>` },
+  { key: "sales", label: "Sales & Business Development",
+    keywords: ["sales", "business development", "account executive", "bdm", "bd exec", "partnerships"],
+    icon: `<path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>` },
+  { key: "finance", label: "Finance & Accounting",
+    keywords: ["finance", "accountant", "accounting", "auditor", "bookkeep", "financial analyst", "tax "],
+    icon: `<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v10M9.5 9.5c0-1.4 1.2-2 2.5-2s2.5.7 2.5 1.8-1 1.6-2.5 1.9-2.5.9-2.5 2 1.2 1.8 2.5 1.8 2.5-.6 2.5-2" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>` },
+  { key: "writing", label: "Content & Writing",
+    keywords: ["writer", "editor", "copywrit", "content strategist", "journalist", "technical writer"],
+    icon: `<path d="M5 19h14M7 15l9-9 2 2-9 9H7v-2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>` },
+  { key: "support", label: "Customer Support & Ops",
+    keywords: ["customer support", "customer service", "operations", "help desk", "support specialist"],
+    icon: `<path d="M4 13a8 8 0 0116 0M4 13v3a2 2 0 002 2h1v-6H6a2 2 0 00-2 2zM20 13v3a2 2 0 01-2 2h-1v-6h1a2 2 0 012 2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>` },
+];
+const CATEGORY_GENERAL = { key: "general", label: "General & Professional",
+  icon: `<path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>` };
+
+function detectCategory(title, description) {
+  const text = `${title || ""} ${description || ""}`.toLowerCase();
+  for (const cat of CATEGORY_RULES) {
+    if (cat.keywords.some(k => text.includes(k))) return cat;
+  }
+  return CATEGORY_GENERAL;
+}
+
+// ---------------------------------------------------------------------
+// Search submit
+// ---------------------------------------------------------------------
+const form = document.getElementById("search-form");
+const resultsSection = document.getElementById("results");
+const jobGrid = document.getElementById("job-grid");
+const deepLinkGrid = document.getElementById("deep-link-grid");
+const emptyState = document.getElementById("empty-state");
+const resultsTitle = document.getElementById("results-title");
+const resultsSub = document.getElementById("results-sub");
+const locationNote = document.getElementById("location-note");
+const deepLinksSection = document.getElementById("deep-links-section");
+const deepLinksTitle = document.getElementById("deep-links-title");
+const deepLinksNote = document.getElementById("deep-links-note");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const t = MODE_TEXT[currentMode];
+  const role = document.getElementById("role").value.trim();
+  const workMode = workModeSel.value; // "any" | "remote" | "onsite" | "hybrid"
+  const isRemote = workMode === "remote";
+  const locationLabel = isRemote
+    ? (getDistrictValue() || stateSel.value ? `Remote · ${getDistrictValue() || stateSel.value}` : "Remote")
+    : `${getDistrictValue() || stateSel.value}, ${stateSel.value}`;
+
+  resultsSection.hidden = true;
+
+  // ---- Workshops: no live feed, go straight to deep links ----
+  if (currentMode === "workshops") {
+    setTimeout(() => {
+      jobGrid.innerHTML = "";
+      resultsTitle.textContent = `Workshop search ready for "${role}"`;
+      resultsSub.textContent = `Filtered toward ${locationLabel} where the platform supports it.`;
+      locationNote.hidden = true;
+      emptyState.hidden = false;
+      document.getElementById("empty-text").textContent =
+        "Workshops aren't available through a public search API, so here are direct, pre-filled searches instead:";
+      deepLinksTitle.textContent = "Workshop platforms";
+      deepLinksNote.textContent = "Each card opens a live search on that platform for your topic.";
+      renderDeepLinks(buildWorkshopLinks(role, locationLabel));
+      resultsSection.hidden = false;
+      resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 400);
+    return;
+  }
+
+  // ---- Jobs / Internships: call the FastAPI backend ----
+  const skills = document.getElementById("skills").value.split(",").map(s => s.trim()).filter(Boolean);
+  const experience = document.getElementById("experience").value;
+  const payload = {
+    role,
+    skills,
+    experience,
+    is_internship: currentMode === "internships",
+    is_remote: isRemote,
+    work_mode: workMode,
+    country: countrySel.value,
+    state: stateSel.value,
+    district: getDistrictValue()
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/jobs/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    renderJobResults(data, role, locationLabel, t);
+  } catch (err) {
+    jobGrid.innerHTML = "";
+    emptyState.hidden = false;
+    document.getElementById("empty-text").textContent =
+      "Couldn't reach the backend. Make sure it's running (uvicorn backend_job:app --reload), then try again.";
+    deepLinkGrid.innerHTML = "";
+    resultsSection.hidden = false;
+  }
+});
+
+function renderJobResults(data, role, locationLabel, t) {
+  const jobs = data.jobs || [];
+  const deepLinks = data.deep_links || [];
+
+  resultsTitle.textContent = jobs.length
+    ? `${jobs.length} live ${t.resultsNoun}${jobs.length === 1 ? "" : "s"} for "${role}"`
+    : `No live ${t.resultsNoun}s matched "${role}" yet`;
+  resultsSub.textContent = `Ranked by closeness to ${locationLabel}, then by how well each posting fits your role, skills and experience.`;
+
+  if (data.location_note) {
+    locationNote.textContent = `📍 ${data.location_note}`;
+    locationNote.hidden = false;
+  } else {
+    locationNote.hidden = true;
+  }
+
+  jobGrid.innerHTML = "";
+  emptyState.hidden = jobs.length !== 0;
+  document.getElementById("empty-text").textContent =
+    "No live listings matched that search yet — but the platforms below almost certainly have something. Try them directly:";
+
+  jobs.forEach(job => {
+    const card = document.createElement("article");
+    card.className = "job-card";
+    const logo = logoUrl(job.publisher);
+    const cat = detectCategory(job.title, job.description);
+    card.innerHTML = `
+      <div class="job-card__banner cat-${cat.key}">
+        <svg viewBox="0 0 24 24" fill="none">${cat.icon}</svg>
+        <span>${escapeHtml(cat.label)}</span>
+      </div>
+      <div class="job-card__body">
+        <div class="job-card__top">
+          <div class="job-card__logo-row">
+            ${logo ? `<img class="job-card__logo" src="${logo}" alt="${escapeHtml(job.publisher)} logo" loading="lazy" onerror="this.style.display='none'">` : ""}
+            <span class="job-card__badge">${job.type}</span>
+          </div>
+          <span class="job-card__match">${job.match_score}% match</span>
+        </div>
+        <h3>${escapeHtml(job.title || "Untitled role")}</h3>
+        <p class="job-card__meta">🏢 ${escapeHtml(job.company)} &nbsp;•&nbsp; 📍 ${escapeHtml(job.location || "—")}</p>
+        <p class="job-card__desc">${escapeHtml(job.description || "")}</p>
+        <div class="job-card__foot">
+          <span class="job-card__source">Sourced via ${escapeHtml(job.publisher)}</span>
+          <a href="${job.apply_link}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Apply ↗</a>
+        </div>
+      </div>`;
+    jobGrid.appendChild(card);
+  });
+
+  deepLinksTitle.textContent = "Check these platforms directly";
+  deepLinksNote.textContent = "These don't offer a public search API, so NexusForge can't pull live listings from them — instead, here's a search already filled in with your role and location.";
+  renderDeepLinks(deepLinks);
+
+  resultsSection.hidden = false;
+  resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderDeepLinks(links) {
+  deepLinkGrid.innerHTML = "";
+  links.forEach(link => {
+    const card = document.createElement("a");
+    card.className = "deep-link-card";
+    card.href = link.url;
+    card.target = "_blank";
+    card.rel = "noopener";
+    const logo = logoUrl(link.platform);
+    card.innerHTML = `
+      <div class="deep-link-card__head">
+        ${logo ? `<img class="deep-link-card__logo" src="${logo}" alt="${escapeHtml(link.platform)} logo" loading="lazy" onerror="this.style.display='none'">` : ""}
+        <div class="deep-link-card__platform">${escapeHtml(link.platform)}</div>
+      </div>
+      <p>${escapeHtml(link.note)}</p>
+      <span class="deep-link-card__cta">Search on ${escapeHtml(link.platform)} →</span>`;
+    deepLinkGrid.appendChild(card);
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+</script>
+</body>
+</html>
