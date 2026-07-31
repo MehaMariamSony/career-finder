@@ -540,43 +540,12 @@ form.addEventListener("submit", async (e) => {
 });
 
 function renderJobResults(data, role, t) {
-  const jobs = data.jobs || [];
   const deepLinks = data.deep_links || [];
 
-  resultsTitle.textContent = jobs.length
-    ? `${jobs.length} live ${t.resultsNoun}${jobs.length === 1 ? "" : "s"} for "${role}"`
-    : `No live ${t.resultsNoun}s matched "${role}" yet`;
+  resultsTitle.textContent = `Platforms to check for "${role}"`;
 
   jobGrid.innerHTML = "";
-  emptyState.hidden = jobs.length !== 0;
-  document.getElementById("empty-text").textContent = "No live listings matched that exact feed query yet — try these platforms directly:";
-
-  jobs.forEach(job => {
-    const card = document.createElement("article");
-    card.className = "job-card";
-    const logo = logoUrl(job.publisher);
-    card.innerHTML = `
-      <div class="job-card__banner cat-tech">
-        <span>${escapeHtml(job.publisher)}</span>
-      </div>
-      <div class="job-card__body">
-        <div class="job-card__top">
-          <div class="job-card__logo-row">
-            ${logo ? `<img class="job-card__logo" src="${logo}" alt="${escapeHtml(job.publisher)}" onerror="this.style.display='none'">` : ""}
-            <span class="job-card__badge">${job.type}</span>
-          </div>
-          <span class="job-card__match">${job.match_score}% match</span>
-        </div>
-        <h3>${escapeHtml(job.title || "Role")}</h3>
-        <p class="job-card__meta">🏢 ${escapeHtml(job.company)} &nbsp;•&nbsp; 📍 ${escapeHtml(job.location || "—")}</p>
-        <p class="job-card__desc">${escapeHtml(job.description || "")}</p>
-        <div class="job-card__foot">
-          <span class="job-card__source">Via ${escapeHtml(job.publisher)}</span>
-          <a href="${job.apply_link}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Apply ↗</a>
-        </div>
-      </div>`;
-    jobGrid.appendChild(card);
-  });
+  emptyState.hidden = true;
 
   deepLinksTitle.textContent = "Check these platforms directly";
   deepLinksNote.textContent = "NexusForge has pre-filled search links for your role and location on these top boards:";
