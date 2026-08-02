@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mehamariamsony.github.io/career-finder/sitemap.xml
