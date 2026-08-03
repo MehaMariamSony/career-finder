@@ -67,13 +67,19 @@ def build_deep_links(role: str, is_internship: bool, location_query: str, countr
         loc_parts = loc_parts[:-1]
     place = ", ".join(loc_parts)
     q_loc = quote_plus(place) if place else ""
-    indeed_domain = "in.indeed.com" if country.lower() == "india" else "www.indeed.com"
+    is_india = country.lower() == "india"
+    indeed_domain = "in.indeed.com" if is_india else "www.indeed.com"
 
     links = [
         {"platform": "LinkedIn", "note": "Search directly on LinkedIn for corporate, MNC, and hiring manager postings.", "url": f"https://www.linkedin.com/jobs/search/?keywords={q_role}&location={q_loc}"},
-        {"platform": "Naukri", "note": "Explore nationwide openings on Naukri.", "url": f"https://www.naukri.com/{quote_plus(role.replace(' ', '-'))}-jobs" + (f"-in-{quote_plus(loc_parts[0])}" if loc_parts else "")},
-        {"platform": "Indeed", "note": "Search aggregated listings on Indeed.", "url": f"https://{indeed_domain}/jobs?q={q_role}&l={q_loc}"},
     ]
+
+    if is_india:
+        links.append({"platform": "Naukri", "note": "Explore nationwide openings on Naukri.", "url": f"https://www.naukri.com/{quote_plus(role.replace(' ', '-'))}-jobs" + (f"-in-{quote_plus(loc_parts[0])}" if loc_parts else "")})
+    else:
+        links.append({"platform": "Glassdoor", "note": "Search company-reviewed listings on Glassdoor.", "url": f"https://www.glassdoor.com/Job/jobs.htm?sc.keyword={q_role}&locT=C&locKeyword={q_loc}"})
+
+    links.append({"platform": "Indeed", "note": "Search aggregated listings on Indeed.", "url": f"https://{indeed_domain}/jobs?q={q_role}&l={q_loc}"})
 
     if is_internship:
         links.insert(1, {"platform": "Internshala", "note": "Search student and early-career internship listings directly.", "url": f"https://internshala.com/internships/keywords-{quote_plus(role.replace(' ', '%20'))}"})
