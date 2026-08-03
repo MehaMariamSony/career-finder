@@ -467,7 +467,7 @@ const PLATFORM_DOMAINS = {
   "The Muse": "themuse.com", "LinkedIn": "linkedin.com", "Naukri": "naukri.com",
   "Indeed": "indeed.com", "Internshala": "internshala.com", "Eventbrite": "eventbrite.com",
   "Meetup": "meetup.com", "Skillshare": "skillshare.com", "Internshala Trainings": "internshala.com",
-  "Glassdoor": "glassdoor.com"
+  "ZipRecruiter": "ziprecruiter.com"
 };
 
 function logoUrl(platformName) {
@@ -577,13 +577,6 @@ function renderDeepLinks(links) {
   });
 }
 
-function escapeHtml(str) {
-  if (!str) return "";
-  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-</script>
-</body>
-</html>
 function escapeHtml(str) {
   if (!str) return "";
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
