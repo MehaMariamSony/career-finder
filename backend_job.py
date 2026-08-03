@@ -77,7 +77,7 @@ def build_deep_links(role: str, is_internship: bool, location_query: str, countr
     if is_india:
         links.append({"platform": "Naukri", "note": "Explore nationwide openings on Naukri.", "url": f"https://www.naukri.com/{quote_plus(role.replace(' ', '-'))}-jobs" + (f"-in-{quote_plus(loc_parts[0])}" if loc_parts else "")})
     else:
-        links.append({"platform": "Glassdoor", "note": "Search company-reviewed listings on Glassdoor.", "url": f"https://www.glassdoor.com/Job/jobs.htm?sc.keyword={q_role}&locT=C&locKeyword={q_loc}"})
+        links.append({"platform": "ZipRecruiter", "note": "Search location-filtered listings on ZipRecruiter (strongest coverage in the US and Canada).", "url": f"https://www.ziprecruiter.com/jobs-search?search={q_role}&location={q_loc}"})
 
     links.append({"platform": "Indeed", "note": "Search aggregated listings on Indeed.", "url": f"https://{indeed_domain}/jobs?q={q_role}&l={q_loc}"})
 
