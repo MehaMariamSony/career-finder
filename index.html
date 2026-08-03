@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NexusForge — Search Jobs & Internships Across All Platforms</title>
+<title>CareerFinder — Search Jobs & Internships Across All Platforms</title>
 <meta name="description" content="Search jobs, internships and workshops across LinkedIn, Naukri, Indeed and more in one place. Upload your CV, get matched instantly, and go straight to the real listing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -157,7 +157,7 @@ a { text-decoration: none; color: inherit; }
 
 <header class="nav">
   <div class="nav__inner">
-    <div class="logo"><span class="logo__mark">N</span>NexusForge</div>
+    <div class="logo"><span class="logo__mark">C</span>CareerFinder</div>
     <div class="mode-tabs" id="mode-tabs">
       <button class="mode-tab active" data-mode="jobs">Jobs</button>
       <button class="mode-tab" data-mode="internships">Internships</button>
@@ -170,7 +170,7 @@ a { text-decoration: none; color: inherit; }
   <div class="hero__inner">
     <p class="eyebrow" id="hero-eyebrow">One search. Every platform.</p>
     <h1 id="hero-title">Stop tab-hopping between job boards.</h1>
-    <p class="hero__sub" id="hero-sub">NexusForge scans live openings from Remotive, Arbeitnow, RemoteOK and The Muse, ranks them against your role, skills and experience, and hands you a shortlist worth your time.</p>
+    <p class="hero__sub" id="hero-sub">CareerFinder instantly builds ready-made search links for LinkedIn, Naukri and Indeed based on your role, skills and location — no more retyping your search on every site.</p>
   </div>
 </section>
 
@@ -237,7 +237,7 @@ a { text-decoration: none; color: inherit; }
   <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format&fit=crop" alt="Team reviewing job matches">
   <div class="photo-strip__text">
     <h2>Why search platform by platform?</h2>
-    <p>Every extra tab is a search you have to repeat by hand. NexusForge runs your role and skills against several live job feeds at once, ranks what comes back, and hands you direct search links that are already filled in and ready to open.</p>
+    <p>Every extra tab is a search you have to repeat by hand. CareerFinder runs your role and skills against several live job feeds at once, ranks what comes back, and hands you direct search links that are already filled in and ready to open.</p>
   </div>
 </section>
 
@@ -261,8 +261,8 @@ a { text-decoration: none; color: inherit; }
 
 <footer class="footer">
   <div class="footer__inner">
-    <div class="logo"><span class="logo__mark">N</span>NexusForge</div>
-    <p>NexusForge aggregates live listings from open job APIs and points you to platforms it can't query directly. Every link sends you to the original source.</p>
+    <div class="logo"><span class="logo__mark">C</span>CareerFinder</div>
+    <p>CareerFinder is built by NexusForge. It aggregates live listings from open job APIs and points you to platforms it can't query directly. Every link sends you to the original source.</p>
     <p class="footer__copyright">&copy; 2026 NexusForge. All Rights Reserved.</p>
   </div>
 </footer>
@@ -294,7 +294,7 @@ const MODE_TEXT = {
   jobs: {
     eyebrow: "One search. Every platform.",
     title: "Stop tab-hopping between job boards.",
-    sub: "NexusForge scans live openings from Remotive, Arbeitnow, RemoteOK and The Muse, ranks them against your role, skills and experience, and hands you a shortlist worth your time.",
+    sub: "CareerFinder instantly builds ready-made search links for LinkedIn, Naukri and Indeed based on your role, skills and location — no more retyping your search on every site.",
     roleLabel: "Desired role",
     rolePlaceholder: "e.g. Python Developer",
     skillsPlaceholder: "e.g. Python, SQL, Django",
@@ -549,7 +549,7 @@ function renderJobResults(data, role, t) {
   emptyState.hidden = true;
 
   deepLinksTitle.textContent = "Check these platforms directly";
-  deepLinksNote.textContent = "NexusForge has pre-filled search links for your role and location on these top boards:";
+  deepLinksNote.textContent = "CareerFinder has pre-filled search links for your role and location on these top boards:";
   renderDeepLinks(deepLinks);
 
   resultsSection.hidden = false;
