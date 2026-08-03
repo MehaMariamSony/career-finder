@@ -305,7 +305,7 @@ const MODE_TEXT = {
   internships: {
     eyebrow: "For students & early-career talent",
     title: "Find internships worth applying to.",
-    sub: "The same live feeds, filtered toward internship-tagged roles, with a direct line to Internshala for India-specific listings.",
+    sub: "The same instant search links, filtered toward internship-tagged roles, with direct links to internship platforms worldwide — plus Internshala for India-specific listings.",
     roleLabel: "Desired internship role",
     rolePlaceholder: "e.g. Marketing Intern",
     skillsPlaceholder: "e.g. SEO, Content Writing, Analytics",
@@ -466,7 +466,8 @@ const PLATFORM_DOMAINS = {
   "Remotive": "remotive.com", "Arbeitnow": "arbeitnow.com", "RemoteOK": "remoteok.com",
   "The Muse": "themuse.com", "LinkedIn": "linkedin.com", "Naukri": "naukri.com",
   "Indeed": "indeed.com", "Internshala": "internshala.com", "Eventbrite": "eventbrite.com",
-  "Meetup": "meetup.com", "Skillshare": "skillshare.com", "Internshala Trainings": "internshala.com"
+  "Meetup": "meetup.com", "Skillshare": "skillshare.com", "Internshala Trainings": "internshala.com",
+  "Glassdoor": "glassdoor.com"
 };
 
 function logoUrl(platformName) {
@@ -576,6 +577,13 @@ function renderDeepLinks(links) {
   });
 }
 
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+</script>
+</body>
+</html>
 function escapeHtml(str) {
   if (!str) return "";
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
