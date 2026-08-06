@@ -134,6 +134,36 @@ a { text-decoration: none; color: inherit; }
 
 .empty-state { background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius); padding: 28px; color: var(--muted); margin-bottom: 12px; }
 
+.featured-listings { margin-top: 8px; }
+
+.hot-banner {
+  max-width: 1180px; margin: 24px auto 0; padding: 0 24px;
+}
+.hot-banner__inner {
+  background: linear-gradient(120deg, #F5B041, #E67E22);
+  color: #3a2200; border-radius: 10px; padding: 12px 22px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 13.5px; font-weight: 700; box-shadow: 0 10px 25px -10px rgba(230,126,34,0.5);
+  cursor: pointer;
+}
+.hot-banner__inner:hover { filter: brightness(1.04); }
+.featured-card {
+  background: linear-gradient(120deg, #fff8e1, #ffffff);
+  border: 2px solid #F5B041; border-radius: var(--radius);
+  padding: 22px; margin-bottom: 18px; position: relative;
+}
+.featured-badge {
+  position: absolute; top: -12px; left: 20px;
+  background: #F5B041; color: #4a3200; font-size: 11.5px; font-weight: 800;
+  padding: 5px 12px; border-radius: 20px; letter-spacing: .03em;
+}
+.featured-card__top { margin-top: 6px; }
+.featured-card h3 { font-size: 18px; margin-bottom: 4px; color: var(--navy); }
+.featured-card__company { color: var(--muted); font-size: 13.5px; }
+.featured-card p { font-size: 13.5px; color: var(--text); line-height: 1.5; margin: 12px 0; }
+.featured-card__cta { display: inline-block; background: var(--red); color: #fff; padding: 10px 22px; border-radius: 8px; font-weight: 600; font-size: 13.5px; }
+.featured-card__cta:hover { background: var(--red-dark); }
+
 .deep-links { margin-top: 48px; }
 .deep-links h3 { font-size: 20px; margin-bottom: 6px; }
 .deep-links__note { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 640px; }
@@ -237,6 +267,10 @@ a { text-decoration: none; color: inherit; }
   </form>
 </section>
 
+<div class="hot-banner" id="hot-banner" hidden>
+  <div class="hot-banner__inner" id="hot-banner-inner">🔥 Featured openings this week — click to see them</div>
+</div>
+
 <section class="photo-strip">
   <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format&fit=crop" alt="Team reviewing job matches">
   <div class="photo-strip__text">
@@ -254,6 +288,8 @@ a { text-decoration: none; color: inherit; }
     <div class="empty-state" id="empty-state" hidden>
       <p id="empty-text"></p>
     </div>
+
+    <div class="featured-listings" id="featured-listings"></div>
 
     <div class="deep-links" id="deep-links-section">
       <h3 id="deep-links-title">Check these platforms directly</h3>
@@ -395,6 +431,27 @@ function refreshDistricts() {
 initLocationData();
 countrySel.addEventListener("change", refreshStates);
 stateSel.addEventListener("change", refreshDistricts);
+
+// Check for active featured listings on page load and show the banner if any exist
+(async function checkFeaturedBanner() {
+  try {
+    const res = await fetch(`${API_BASE}/api/featured/active`);
+    const data = await res.json();
+    if (data.success && data.count > 0) {
+      const banner = document.getElementById("hot-banner");
+      const inner = document.getElementById("hot-banner-inner");
+      const label = data.count === 1 ? "1 featured opening this week" : `${data.count} featured openings this week`;
+      inner.textContent = `🔥 ${label} — search below to see them`;
+      banner.hidden = false;
+      banner.addEventListener("click", () => {
+        document.getElementById("role").focus();
+        document.querySelector(".search-panel").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+  } catch (err) {
+    // Silently ignore -- banner just won't show if the backend isn't reachable
+  }
+})();
 
 // CV upload handling
 const resumeInput = document.getElementById("resume-file");
@@ -550,11 +607,14 @@ form.addEventListener("submit", async (e) => {
 
 function renderJobResults(data, role, t) {
   const deepLinks = data.deep_links || [];
+  const featured = data.featured || [];
 
   resultsTitle.textContent = `Platforms to check for "${role}"`;
 
   jobGrid.innerHTML = "";
   emptyState.hidden = true;
+
+  renderFeaturedListings(featured);
 
   deepLinksTitle.textContent = "Check these platforms directly";
   deepLinksNote.textContent = "CareerFinder has pre-filled search links for your role and location on these top boards:";
@@ -562,6 +622,24 @@ function renderJobResults(data, role, t) {
 
   resultsSection.hidden = false;
   resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderFeaturedListings(listings) {
+  const container = document.getElementById("featured-listings");
+  container.innerHTML = "";
+  listings.forEach(listing => {
+    const card = document.createElement("div");
+    card.className = "featured-card";
+    card.innerHTML = `
+      <span class="featured-badge">⭐ FEATURED</span>
+      <div class="featured-card__top">
+        <h3>${escapeHtml(listing.title || "")}</h3>
+        <div class="featured-card__company">${escapeHtml(listing.company || "")}${listing.location ? " · " + escapeHtml(listing.location) : ""}</div>
+      </div>
+      <p>${escapeHtml(listing.description || "")}</p>
+      <a class="featured-card__cta" href="${listing.apply_link || "#"}" target="_blank" rel="noopener">Apply directly →</a>`;
+    container.appendChild(card);
+  });
 }
 
 function renderDeepLinks(links) {
