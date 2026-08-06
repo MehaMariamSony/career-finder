@@ -9,7 +9,7 @@
 <meta property="og:image" content="https://www.careerfinderco.online/preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.careerfinderco.online/preview.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230B1D3A%22/><text x=%2250%22 y=%2266%22 font-family=%22Poppins,Arial,sans-serif%22 font-weight=%22700%22 font-size=%2255%22 fill=%22%23E63946%22 text-anchor=%22middle%22>C</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -41,6 +41,16 @@ a { text-decoration: none; color: inherit; }
 .mode-tabs { display: flex; gap: 6px; background: rgba(255,255,255,0.08); padding: 5px; border-radius: 10px; }
 .mode-tab { padding: 9px 20px; border-radius: 7px; font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.65); cursor: pointer; border: none; background: transparent; font-family: inherit; }
 .mode-tab.active { background: var(--red); color: white; }
+.mode-tab.has-dot { position: relative; }
+.mode-tab.has-dot::after {
+  content: ""; position: absolute; top: 6px; right: 8px;
+  width: 6px; height: 6px; border-radius: 50%; background: #F5B041;
+}
+
+.post-job-link {
+  color: rgba(255,255,255,0.55); font-weight: 500; font-size: 13px; white-space: nowrap;
+}
+.post-job-link:hover { color: rgba(255,255,255,0.85); }
 
 /* Hero */
 .hero {
@@ -91,13 +101,36 @@ a { text-decoration: none; color: inherit; }
 .btn--sm { padding: 9px 16px; font-size: 13.5px; }
 
 /* Photo strip */
-.photo-strip {
-  max-width: 1180px; margin: 60px auto 0; padding: 0 24px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
+/* Highlights section (Featured / Post a Job / Contact) */
+.highlights { max-width: 1180px; margin: 60px auto 0; padding: 0 24px; }
+.highlights__inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.highlight-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 26px 24px; display: flex; flex-direction: column; gap: 4px;
 }
-.photo-strip img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); display: block; }
-.photo-strip__text h2 { font-size: 26px; margin-bottom: 12px; }
-.photo-strip__text p { color: var(--muted); font-size: 14.5px; line-height: 1.65; }
+.highlight-card--featured {
+  background: var(--navy); border: 1px solid var(--navy);
+}
+.highlight-card__eyebrow {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--red-dark); margin: 0 0 6px;
+}
+.highlight-card--featured .highlight-card__eyebrow { color: #F5B041; }
+.highlight-card h3 { font-size: 18px; margin-bottom: 8px; }
+.highlight-card--featured h3 { color: var(--white); }
+.highlight-card__body { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0 0 18px; flex: 1; }
+.highlight-card--featured .highlight-card__body { color: rgba(255,255,255,0.65); }
+.highlight-card__link {
+  font-size: 13.5px; font-weight: 700; color: var(--red-dark);
+  border: none; background: none; padding: 0; cursor: pointer; text-align: left; font-family: inherit;
+}
+.highlight-card--featured .highlight-card__link { color: #F5B041; }
+.highlight-card__link:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .highlights__inner { grid-template-columns: 1fr; }
+}
+
 
 /* Results */
 .results { padding: 64px 24px 40px; }
@@ -135,34 +168,29 @@ a { text-decoration: none; color: inherit; }
 .empty-state { background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius); padding: 28px; color: var(--muted); margin-bottom: 12px; }
 
 .featured-listings { margin-top: 8px; }
-
-.hot-banner {
-  max-width: 1180px; margin: 24px auto 0; padding: 0 24px;
-}
-.hot-banner__inner {
-  background: linear-gradient(120deg, #F5B041, #E67E22);
-  color: #3a2200; border-radius: 10px; padding: 12px 22px;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  font-size: 13.5px; font-weight: 700; box-shadow: 0 10px 25px -10px rgba(230,126,34,0.5);
-  cursor: pointer;
-}
-.hot-banner__inner:hover { filter: brightness(1.04); }
 .featured-card {
-  background: linear-gradient(120deg, #fff8e1, #ffffff);
-  border: 2px solid #F5B041; border-radius: var(--radius);
-  padding: 22px; margin-bottom: 18px; position: relative;
+  background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy);
+  border-radius: var(--radius); padding: 24px; margin-bottom: 16px; position: relative;
 }
 .featured-badge {
-  position: absolute; top: -12px; left: 20px;
-  background: #F5B041; color: #4a3200; font-size: 11.5px; font-weight: 800;
-  padding: 5px 12px; border-radius: 20px; letter-spacing: .03em;
+  display: inline-block; background: var(--navy); color: var(--white);
+  font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px; margin-bottom: 12px;
 }
-.featured-card__top { margin-top: 6px; }
+.featured-card__top { margin-top: 2px; }
 .featured-card h3 { font-size: 18px; margin-bottom: 4px; color: var(--navy); }
 .featured-card__company { color: var(--muted); font-size: 13.5px; }
 .featured-card p { font-size: 13.5px; color: var(--text); line-height: 1.5; margin: 12px 0; }
 .featured-card__cta { display: inline-block; background: var(--red); color: #fff; padding: 10px 22px; border-radius: 8px; font-weight: 600; font-size: 13.5px; }
 .featured-card__cta:hover { background: var(--red-dark); }
+
+/* Contact section */
+.contact-section { background: var(--white); border-top: 1px solid var(--border); padding: 60px 24px; }
+.contact-section__inner { max-width: 1180px; margin: 0 auto; text-align: center; }
+.contact-section h2 { font-size: 24px; margin-bottom: 10px; }
+.contact-section p { color: var(--muted); font-size: 14.5px; margin: 0 0 18px; }
+.contact-section a.contact-email { font-size: 17px; font-weight: 600; color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: 2px; }
+.contact-section a.contact-email:hover { color: var(--red-dark); }
 
 .deep-links { margin-top: 48px; }
 .deep-links h3 { font-size: 20px; margin-bottom: 6px; }
@@ -184,7 +212,7 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 860px) {
   .hero h1 { font-size: 32px; }
   .search-panel { margin-top: -50px; }
-  .photo-strip { grid-template-columns: 1fr; }
+  .highlights__inner { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -196,7 +224,8 @@ a { text-decoration: none; color: inherit; }
     <div class="mode-tabs" id="mode-tabs">
       <button class="mode-tab active" data-mode="jobs">Jobs</button>
       <button class="mode-tab" data-mode="internships">Internships</button>
-      <button class="mode-tab" data-mode="workshops">Workshops</button>
+      <button class="mode-tab" data-mode="featured" id="featured-tab">Featured</button>
+    </div>
   </div>
 </header>
 
@@ -213,7 +242,7 @@ a { text-decoration: none; color: inherit; }
     <!-- Upload CV moved to top -->
     <div class="cv-upload-row">
       <label class="cv-upload-label" for="resume-file">
-        📄 Upload your CV
+        Upload your CV
       </label>
       <input type="file" id="resume-file" accept="application/pdf">
       <span id="cv-status" class="cv-status"></span>
@@ -267,15 +296,26 @@ a { text-decoration: none; color: inherit; }
   </form>
 </section>
 
-<div class="hot-banner" id="hot-banner" hidden>
-  <div class="hot-banner__inner" id="hot-banner-inner">🔥 Featured openings this week — click to see them</div>
-</div>
-
-<section class="photo-strip">
-  <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format&fit=crop" alt="Team reviewing job matches">
-  <div class="photo-strip__text">
-    <h2>Why search platform by platform?</h2>
-    <p>Every extra tab is a search you have to repeat by hand. CareerFinder runs your role and skills against several live job feeds at once, ranks what comes back, and hands you direct search links that are already filled in and ready to open.</p>
+<section class="highlights">
+  <div class="highlights__inner">
+    <div class="highlight-card highlight-card--featured">
+      <p class="highlight-card__eyebrow">This Week</p>
+      <h3>Featured Openings</h3>
+      <p class="highlight-card__body" id="featured-highlight-text">Hand-picked roles, placed above every platform search. Curated for quality, not just quantity.</p>
+      <button class="highlight-card__link" id="featured-highlight-btn">View featured openings →</button>
+    </div>
+    <div class="highlight-card">
+      <p class="highlight-card__eyebrow">For Employers</p>
+      <h3>Post a Job</h3>
+      <p class="highlight-card__body">Get your opening in front of active job seekers, placed ahead of LinkedIn and Indeed results.</p>
+      <a class="highlight-card__link" href="post-a-job.html">List an opening →</a>
+    </div>
+    <div class="highlight-card">
+      <p class="highlight-card__eyebrow">Get in Touch</p>
+      <h3>Contact Us</h3>
+      <p class="highlight-card__body">Questions, feedback, or partnership ideas — reach our team directly by email.</p>
+      <a class="highlight-card__link" href="mailto:info@careerfinderco.online">info@careerfinderco.online</a>
+    </div>
   </div>
 </section>
 
@@ -299,6 +339,14 @@ a { text-decoration: none; color: inherit; }
   </div>
 </section>
 
+<section class="contact-section">
+  <div class="contact-section__inner">
+    <h2>Contact Us</h2>
+    <p>Questions, feedback, or partnership inquiries — reach out anytime.</p>
+    <a class="contact-email" href="mailto:info@careerfinderco.online">info@careerfinderco.online</a>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer__inner" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
     <div>
@@ -306,7 +354,10 @@ a { text-decoration: none; color: inherit; }
       <p>CareerFinder is built by NexusForge. It aggregates live listings from open job APIs and points you to platforms it can't query directly. Every link sends you to the original source.</p>
       <p class="footer__copyright">&copy; 2026 NexusForge. All Rights Reserved.</p>
     </div>
-    <a href="blog/how-to-search-multiple-job-platforms.html" style="color:rgba(255,255,255,0.75); font-weight:600; font-size:14px;">Blog</a>
+    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+      <a href="post-a-job.html" style="color:rgba(255,255,255,0.75); font-weight:600; font-size:14px;">Post a job</a>
+      <a href="blog/how-to-search-multiple-job-platforms.html" style="color:rgba(255,255,255,0.75); font-weight:600; font-size:14px;">Blog</a>
+    </div>
   </div>
 </footer>
 
@@ -432,26 +483,64 @@ initLocationData();
 countrySel.addEventListener("change", refreshStates);
 stateSel.addEventListener("change", refreshDistricts);
 
-// Check for active featured listings on page load and show the banner if any exist
-(async function checkFeaturedBanner() {
+// Check for active featured listings on page load; update the Featured tab and homepage card
+let featuredCount = 0;
+(async function checkFeaturedCount() {
   try {
     const res = await fetch(`${API_BASE}/api/featured/active`);
     const data = await res.json();
-    if (data.success && data.count > 0) {
-      const banner = document.getElementById("hot-banner");
-      const inner = document.getElementById("hot-banner-inner");
-      const label = data.count === 1 ? "1 featured opening this week" : `${data.count} featured openings this week`;
-      inner.textContent = `🔥 ${label} — search below to see them`;
-      banner.hidden = false;
-      banner.addEventListener("click", () => {
-        document.getElementById("role").focus();
-        document.querySelector(".search-panel").scrollIntoView({ behavior: "smooth", block: "center" });
-      });
+    if (data.success) {
+      featuredCount = data.count || 0;
+      const highlightText = document.getElementById("featured-highlight-text");
+      if (featuredCount > 0) {
+        document.getElementById("featured-tab").classList.add("has-dot");
+        highlightText.textContent = featuredCount === 1
+          ? "1 hand-picked opening is live right now, placed above every platform search."
+          : `${featuredCount} hand-picked openings are live right now, placed above every platform search.`;
+      } else {
+        highlightText.textContent = "Curated roles will appear here first, ahead of every platform search. Check back soon.";
+      }
     }
   } catch (err) {
-    // Silently ignore -- banner just won't show if the backend isn't reachable
+    // Silently ignore -- card keeps its default copy if the backend isn't reachable
   }
 })();
+
+document.getElementById("featured-highlight-btn").addEventListener("click", () => {
+  document.getElementById("featured-tab").click();
+});
+
+document.getElementById("featured-tab").addEventListener("click", async () => {
+  document.querySelectorAll(".mode-tab").forEach(b => b.classList.remove("active"));
+  document.getElementById("featured-tab").classList.add("active");
+
+  jobGrid.innerHTML = "";
+  deepLinkGrid.innerHTML = "";
+  deepLinksTitle.textContent = "";
+  deepLinksNote.textContent = "";
+  resultsTitle.textContent = "This week's featured openings";
+
+  try {
+    const res = await fetch(`${API_BASE}/api/featured/active`);
+    const data = await res.json();
+    const listings = (data.success && data.listings) || [];
+    if (listings.length > 0) {
+      emptyState.hidden = true;
+      renderFeaturedListings(listings);
+    } else {
+      renderFeaturedListings([]);
+      emptyState.hidden = false;
+      document.getElementById("empty-text").innerHTML =
+        `No featured openings are live right now. <a href="post-a-job.html" style="color:var(--red-dark); font-weight:600;">Post a job</a> to get featured here.`;
+    }
+  } catch (err) {
+    emptyState.hidden = false;
+    document.getElementById("empty-text").textContent = "Couldn't reach the server. Make sure the backend is running.";
+  }
+
+  resultsSection.hidden = false;
+  resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
 // CV upload handling
 const resumeInput = document.getElementById("resume-file");
@@ -495,7 +584,7 @@ resumeInput.addEventListener("change", async () => {
 // Tab switching
 document.getElementById("mode-tabs").addEventListener("click", (e) => {
   const btn = e.target.closest(".mode-tab");
-  if (!btn) return;
+  if (!btn || btn.id === "featured-tab") return;
   document.querySelectorAll(".mode-tab").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   currentMode = btn.dataset.mode;
@@ -631,7 +720,7 @@ function renderFeaturedListings(listings) {
     const card = document.createElement("div");
     card.className = "featured-card";
     card.innerHTML = `
-      <span class="featured-badge">⭐ FEATURED</span>
+      <span class="featured-badge">Featured</span>
       <div class="featured-card__top">
         <h3>${escapeHtml(listing.title || "")}</h3>
         <div class="featured-card__company">${escapeHtml(listing.company || "")}${listing.location ? " · " + escapeHtml(listing.location) : ""}</div>
