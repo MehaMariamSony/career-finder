@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Post a Job — Reach Job Seekers on CareerFinder</title>
 <meta name="description" content="Post your job opening as a Featured listing and get seen by job seekers searching on CareerFinder — shown above regular platform links.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230B1D3A%22/><text x=%2250%22 y=%2266%22 font-family=%22Poppins,Arial,sans-serif%22 font-weight=%22700%22 font-size=%2255%22 fill=%22%23E63946%22 text-anchor=%22middle%22>C</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -31,10 +31,14 @@ a { text-decoration: none; color: inherit; }
 .hero p { font-size: 15.5px; color: var(--muted); line-height: 1.65; max-width: 560px; margin: 0; }
 
 .perks { max-width: 900px; margin: 32px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.perk { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-.perk__icon { font-size: 22px; margin-bottom: 8px; }
+.perk { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 20px; }
+.perk__num {
+  width: 26px; height: 26px; border-radius: 7px; background: var(--navy); color: var(--white);
+  font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12.5px;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+}
 .perk h3 { font-size: 14.5px; margin-bottom: 6px; }
-.perk p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.5; }
+.perk p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.55; }
 
 .form-section { max-width: 900px; margin: 40px auto 80px; padding: 0 24px; }
 .form-card { background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 45px -20px rgba(11,29,58,0.18); padding: 30px; }
@@ -58,6 +62,19 @@ a { text-decoration: none; color: inherit; }
 .footer { background: var(--navy); padding: 30px 24px; margin-top: 20px; text-align: center; }
 .footer p { color: rgba(255,255,255,0.45); font-size: 12.5px; margin: 0; }
 
+.contact-section { max-width: 900px; margin: 0 auto 60px; padding: 0 24px; }
+.contact-card {
+  background: var(--navy); border-radius: var(--radius); padding: 34px 36px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.contact-card__text h2 { color: var(--white); font-size: 19px; margin-bottom: 6px; }
+.contact-card__text p { color: rgba(255,255,255,0.6); font-size: 13.5px; margin: 0; }
+.contact-card__email {
+  background: var(--white); color: var(--navy); padding: 12px 26px; border-radius: 8px;
+  font-weight: 600; font-size: 14px; white-space: nowrap;
+}
+.contact-card__email:hover { background: #f0f1f5; }
+
 @media (max-width: 700px) { .perks { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -78,17 +95,17 @@ a { text-decoration: none; color: inherit; }
 
 <div class="perks">
   <div class="perk">
-    <div class="perk__icon">👀</div>
+    <div class="perk__num">01</div>
     <h3>Seen before platforms</h3>
     <p>Matching searches show your listing first, marked as Featured.</p>
   </div>
   <div class="perk">
-    <div class="perk__icon">💬</div>
+    <div class="perk__num">02</div>
     <h3>Submit an inquiry first</h3>
     <p>No payment on this form — we'll contact you to confirm details and pricing.</p>
   </div>
   <div class="perk">
-    <div class="perk__icon">✅</div>
+    <div class="perk__num">03</div>
     <h3>Goes live after payment</h3>
     <p>Your listing is added only once payment is confirmed with our team.</p>
   </div>
@@ -164,9 +181,17 @@ a { text-decoration: none; color: inherit; }
   </div>
 </section>
 
+<section class="contact-section">
+  <div class="contact-card">
+    <div class="contact-card__text">
+      <h2>Contact Us</h2>
+      <p>Have a question before submitting? Reach our team directly.</p>
+    </div>
+    <a href="mailto:info@careerfinderco.online" class="contact-card__email">info@careerfinderco.online</a>
+  </div>
+</section>
+
 <footer class="footer">
-  <p style="margin-bottom:8px; color:rgba(255,255,255,0.7); font-weight:600;">Questions before you submit?</p>
-  <p style="margin-bottom:16px;"><a href="mailto:info@careerfinderco.online" style="color:rgba(255,255,255,0.85); font-weight:600;">info@careerfinderco.online</a></p>
   <p>&copy; 2026 NexusForge. All Rights Reserved.</p>
 </footer>
 
