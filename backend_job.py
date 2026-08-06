@@ -67,24 +67,61 @@ def build_deep_links(role: str, is_internship: bool, location_query: str, countr
         loc_parts = loc_parts[:-1]
     place = ", ".join(loc_parts)
     q_loc = quote_plus(place) if place else ""
-    is_india = country.lower() == "india"
-    indeed_domain = "in.indeed.com" if is_india else "www.indeed.com"
+    indeed_domain = "in.indeed.com" if country.lower() == "india" else "www.indeed.com"
 
     links = [
         {"platform": "LinkedIn", "note": "Search directly on LinkedIn for corporate, MNC, and hiring manager postings.", "url": f"https://www.linkedin.com/jobs/search/?keywords={q_role}&location={q_loc}"},
+        {"platform": "Naukri", "note": "Explore nationwide openings on Naukri.", "url": f"https://www.naukri.com/{quote_plus(role.replace(' ', '-'))}-jobs" + (f"-in-{quote_plus(loc_parts[0])}" if loc_parts else "")},
+        {"platform": "Indeed", "note": "Search aggregated listings on Indeed.", "url": f"https://{indeed_domain}/jobs?q={q_role}&l={q_loc}"},
     ]
-
-    if is_india:
-        links.append({"platform": "Naukri", "note": "Explore nationwide openings on Naukri.", "url": f"https://www.naukri.com/{quote_plus(role.replace(' ', '-'))}-jobs" + (f"-in-{quote_plus(loc_parts[0])}" if loc_parts else "")})
-    else:
-        links.append({"platform": "ZipRecruiter", "note": "Search location-filtered listings on ZipRecruiter (strongest coverage in the US and Canada).", "url": f"https://www.ziprecruiter.com/jobs-search?search={q_role}&location={q_loc}"})
-
-    links.append({"platform": "Indeed", "note": "Search aggregated listings on Indeed.", "url": f"https://{indeed_domain}/jobs?q={q_role}&l={q_loc}"})
 
     if is_internship:
         links.insert(1, {"platform": "Internshala", "note": "Search student and early-career internship listings directly.", "url": f"https://internshala.com/internships/keywords-{quote_plus(role.replace(' ', '%20'))}"})
 
     return links
+
+
+# ---------------------------------------------------------------------------
+# Featured listings (paid placements)
+# ---------------------------------------------------------------------------
+# Manually add an entry here once a poster has paid and you've confirmed the
+# details. "keywords" should be lowercase words a job seeker's search might
+# contain -- if ANY keyword matches the searched role, this listing is shown
+# at the top of results, above the platform links.
+#
+# Example:
+# {
+#     "company": "Acme Studios",
+#     "title": "Junior Backend Developer",
+#     "location": "Bengaluru, India",
+#     "description": "Python/Django role, freshers welcome to apply.",
+#     "apply_link": "https://acmestudios.com/careers/backend-junior",
+#     "keywords": ["python developer", "backend developer", "django developer"],
+# }
+
+FEATURED_LISTINGS = [
+    # Add real paid listings here, following the example format above.
+]
+
+
+def find_featured_matches(role: str) -> List[dict]:
+    role_lower = role.lower().strip()
+    matches = []
+    for listing in FEATURED_LISTINGS:
+        for kw in listing.get("keywords", []):
+            if kw.lower() in role_lower or role_lower in kw.lower():
+                matches.append(listing)
+                break
+    return matches
+
+
+@app.get("/api/featured/active")
+def get_active_featured():
+    return {
+        "success": True,
+        "count": len(FEATURED_LISTINGS),
+        "listings": FEATURED_LISTINGS,
+    }
 
 
 @app.post("/api/resume/parse")
@@ -132,9 +169,11 @@ def search_jobs(req: JobSearchRequest):
 
     try:
         deep_links = build_deep_links(req.role, req.is_internship, location_query, req.country or "")
+        featured = find_featured_matches(req.role)
 
         return {
             "success": True,
+            "featured": featured,
             "deep_links": deep_links,
         }
 
