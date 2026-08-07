@@ -41,10 +41,20 @@ a { text-decoration: none; color: inherit; }
 .mode-tabs { display: flex; gap: 6px; background: rgba(255,255,255,0.08); padding: 5px; border-radius: 10px; }
 .mode-tab { padding: 9px 20px; border-radius: 7px; font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.65); cursor: pointer; border: none; background: transparent; font-family: inherit; }
 .mode-tab.active { background: var(--red); color: white; }
-.mode-tab.has-dot { position: relative; }
-.mode-tab.has-dot::after {
-  content: ""; position: absolute; top: 6px; right: 8px;
-  width: 6px; height: 6px; border-radius: 50%; background: #F5B041;
+
+.featured-nav-btn {
+  background: linear-gradient(120deg, #F5B041, #E67E22);
+  color: #3a2200; font-weight: 700; font-size: 14px;
+  padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer;
+  box-shadow: 0 6px 16px -6px rgba(230,126,34,0.55);
+}
+.featured-nav-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.featured-nav-btn.active { box-shadow: inset 0 0 0 2px rgba(58,34,0,0.4); }
+.featured-nav-btn.has-dot { position: relative; }
+.featured-nav-btn.has-dot::after {
+  content: ""; position: absolute; top: -4px; right: -4px;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--red);
+  border: 2px solid var(--navy);
 }
 
 .post-job-link {
@@ -101,35 +111,26 @@ a { text-decoration: none; color: inherit; }
 .btn--sm { padding: 9px 16px; font-size: 13.5px; }
 
 /* Photo strip */
-/* Highlights section (Featured / Post a Job / Contact) */
+/* Featured highlight card (matches gold Featured nav button) */
 .highlights { max-width: 1180px; margin: 60px auto 0; padding: 0 24px; }
-.highlights__inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.highlight-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 26px 24px; display: flex; flex-direction: column; gap: 4px;
-}
-.highlight-card--featured {
-  background: var(--navy); border: 1px solid var(--navy);
+.highlight-card--solo {
+  background: linear-gradient(120deg, #fff8e9, #ffffff);
+  border: 1px solid #F5D9A8; border-radius: var(--radius);
+  padding: 30px 34px; display: flex; flex-direction: column; gap: 4px;
+  text-align: center; align-items: center;
 }
 .highlight-card__eyebrow {
   font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--red-dark); margin: 0 0 6px;
+  color: #C9791A; margin: 0 0 6px;
 }
-.highlight-card--featured .highlight-card__eyebrow { color: #F5B041; }
-.highlight-card h3 { font-size: 18px; margin-bottom: 8px; }
-.highlight-card--featured h3 { color: var(--white); }
-.highlight-card__body { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0 0 18px; flex: 1; }
-.highlight-card--featured .highlight-card__body { color: rgba(255,255,255,0.65); }
+.highlight-card--solo h3 { font-size: 22px; margin-bottom: 8px; }
+.highlight-card__body { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 0 18px; max-width: 500px; }
 .highlight-card__link {
-  font-size: 13.5px; font-weight: 700; color: var(--red-dark);
-  border: none; background: none; padding: 0; cursor: pointer; text-align: left; font-family: inherit;
+  font-size: 14px; font-weight: 700; color: #3a2200;
+  border: none; background: linear-gradient(120deg, #F5B041, #E67E22);
+  padding: 11px 26px; border-radius: 8px; cursor: pointer; font-family: inherit;
 }
-.highlight-card--featured .highlight-card__link { color: #F5B041; }
-.highlight-card__link:hover { text-decoration: underline; }
-
-@media (max-width: 860px) {
-  .highlights__inner { grid-template-columns: 1fr; }
-}
+.highlight-card__link:hover { filter: brightness(1.05); }
 
 
 /* Results */
@@ -185,13 +186,6 @@ a { text-decoration: none; color: inherit; }
 .featured-card__cta:hover { background: var(--red-dark); }
 
 /* Contact section */
-.contact-section { background: var(--white); border-top: 1px solid var(--border); padding: 60px 24px; }
-.contact-section__inner { max-width: 1180px; margin: 0 auto; text-align: center; }
-.contact-section h2 { font-size: 24px; margin-bottom: 10px; }
-.contact-section p { color: var(--muted); font-size: 14.5px; margin: 0 0 18px; }
-.contact-section a.contact-email { font-size: 17px; font-weight: 600; color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: 2px; }
-.contact-section a.contact-email:hover { color: var(--red-dark); }
-
 .deep-links { margin-top: 48px; }
 .deep-links h3 { font-size: 20px; margin-bottom: 6px; }
 .deep-links__note { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 640px; }
@@ -204,15 +198,29 @@ a { text-decoration: none; color: inherit; }
 .deep-link-card p { font-size: 13px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.5; flex: 1; }
 .deep-link-card__cta { font-size: 13px; font-weight: 600; color: #FF8A80; }
 
-.footer { background: var(--navy); padding: 40px 24px; margin-top: 40px; }
+.footer { background: var(--navy); padding: 48px 24px 32px; margin-top: 40px; }
 .footer__inner { max-width: 1180px; margin: 0 auto; }
 .footer p { color: rgba(255,255,255,0.55); font-size: 13.5px; max-width: 560px; line-height: 1.6; }
-.footer__copyright { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.4) !important; }
+.footer__brand { margin-bottom: 36px; }
+.footer__blocks {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;
+  margin-bottom: 30px;
+}
+.footer__block { background: var(--navy2); padding: 24px 26px; }
+.footer__block h3 { color: var(--white); font-size: 15px; margin-bottom: 8px; }
+.footer__block p { font-size: 13px; margin-bottom: 14px; max-width: none; }
+.footer__block-link { color: #F5B041; font-weight: 700; font-size: 13.5px; }
+.footer__block-link:hover { text-decoration: underline; }
+.footer__copyright { padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.4) !important; }
+
+@media (max-width: 700px) {
+  .footer__blocks { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 860px) {
   .hero h1 { font-size: 32px; }
   .search-panel { margin-top: -50px; }
-  .highlights__inner { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -224,8 +232,9 @@ a { text-decoration: none; color: inherit; }
     <div class="mode-tabs" id="mode-tabs">
       <button class="mode-tab active" data-mode="jobs">Jobs</button>
       <button class="mode-tab" data-mode="internships">Internships</button>
-      <button class="mode-tab" data-mode="featured" id="featured-tab">Featured</button>
+      <button class="mode-tab" data-mode="workshops">Workshops</button>
     </div>
+    <button class="featured-nav-btn" id="featured-tab">Featured</button>
   </div>
 </header>
 
@@ -297,25 +306,11 @@ a { text-decoration: none; color: inherit; }
 </section>
 
 <section class="highlights">
-  <div class="highlights__inner">
-    <div class="highlight-card highlight-card--featured">
-      <p class="highlight-card__eyebrow">This Week</p>
-      <h3>Featured Openings</h3>
-      <p class="highlight-card__body" id="featured-highlight-text">Hand-picked roles, placed above every platform search. Curated for quality, not just quantity.</p>
-      <button class="highlight-card__link" id="featured-highlight-btn">View featured openings →</button>
-    </div>
-    <div class="highlight-card">
-      <p class="highlight-card__eyebrow">For Employers</p>
-      <h3>Post a Job</h3>
-      <p class="highlight-card__body">Get your opening in front of active job seekers, placed ahead of LinkedIn and Indeed results.</p>
-      <a class="highlight-card__link" href="post-a-job.html">List an opening →</a>
-    </div>
-    <div class="highlight-card">
-      <p class="highlight-card__eyebrow">Get in Touch</p>
-      <h3>Contact Us</h3>
-      <p class="highlight-card__body">Questions, feedback, or partnership ideas — reach our team directly by email.</p>
-      <a class="highlight-card__link" href="mailto:info@careerfinderco.online">info@careerfinderco.online</a>
-    </div>
+  <div class="highlight-card--solo">
+    <p class="highlight-card__eyebrow">This Week</p>
+    <h3>Featured Openings</h3>
+    <p class="highlight-card__body" id="featured-highlight-text">Hand-picked roles, placed above every platform search. Curated for quality, not just quantity.</p>
+    <button class="highlight-card__link" id="featured-highlight-btn">View featured openings →</button>
   </div>
 </section>
 
@@ -339,25 +334,27 @@ a { text-decoration: none; color: inherit; }
   </div>
 </section>
 
-<section class="contact-section">
-  <div class="contact-section__inner">
-    <h2>Contact Us</h2>
-    <p>Questions, feedback, or partnership inquiries — reach out anytime.</p>
-    <a class="contact-email" href="mailto:info@careerfinderco.online">info@careerfinderco.online</a>
-  </div>
-</section>
-
 <footer class="footer">
-  <div class="footer__inner" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
-    <div>
+  <div class="footer__inner">
+    <div class="footer__brand">
       <div class="logo"><span class="logo__mark">N</span>CareerFinder</div>
-      <p>CareerFinder is built by NexusForge. It aggregates live listings from open job APIs and points you to platforms it can't query directly. Every link sends you to the original source.</p>
-      <p class="footer__copyright">&copy; 2026 NexusForge. All Rights Reserved.</p>
+      <p>CareerFinder aggregates job, internship and workshop search links across LinkedIn, Indeed and more, and points you to the original source for every listing.</p>
     </div>
-    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
-      <a href="post-a-job.html" style="color:rgba(255,255,255,0.75); font-weight:600; font-size:14px;">Post a job</a>
-      <a href="blog/how-to-search-multiple-job-platforms.html" style="color:rgba(255,255,255,0.75); font-weight:600; font-size:14px;">Blog</a>
+
+    <div class="footer__blocks">
+      <div class="footer__block">
+        <h3>Post an Opening</h3>
+        <p>Hiring, running an internship program, or hosting a workshop? Get it featured above every matching search.</p>
+        <a href="post-a-job.html" class="footer__block-link">List with us →</a>
+      </div>
+      <div class="footer__block">
+        <h3>Contact Us</h3>
+        <p>Questions, feedback, or partnership ideas — reach our team directly.</p>
+        <a href="mailto:info@careerfinderco.online" class="footer__block-link">info@careerfinderco.online</a>
+      </div>
     </div>
+
+    <p class="footer__copyright">&copy; 2026 NexusForge. All Rights Reserved. · <a href="blog/how-to-search-multiple-job-platforms.html" style="color:rgba(255,255,255,0.55);">Blog</a></p>
   </div>
 </footer>
 
