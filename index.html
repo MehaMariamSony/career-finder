@@ -111,6 +111,15 @@ a { text-decoration: none; color: inherit; }
 .btn--sm { padding: 9px 16px; font-size: 13.5px; }
 
 /* Photo strip */
+/* Photo strip */
+.photo-strip {
+  max-width: 1180px; margin: 60px auto 0; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
+}
+.photo-strip img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); display: block; }
+.photo-strip__text h2 { font-size: 26px; margin-bottom: 12px; }
+.photo-strip__text p { color: var(--muted); font-size: 14.5px; line-height: 1.65; }
+
 /* Featured highlight card (matches gold Featured nav button) */
 .highlights { max-width: 1180px; margin: 60px auto 0; padding: 0 24px; }
 .highlight-card--solo {
@@ -303,6 +312,14 @@ a { text-decoration: none; color: inherit; }
       <button type="submit" class="btn btn--primary" id="search-btn">Find a job →</button>
     </div>
   </form>
+</section>
+
+<section class="photo-strip" id="photo-strip">
+  <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format&fit=crop" alt="Team reviewing job matches">
+  <div class="photo-strip__text">
+    <h2>Why search platform by platform?</h2>
+    <p>Every extra tab is a search you have to repeat by hand. CareerFinder runs your role and skills against several live job feeds at once, ranks what comes back, and hands you direct search links that are already filled in and ready to open.</p>
+  </div>
 </section>
 
 <section class="highlights">
@@ -510,6 +527,7 @@ document.getElementById("featured-highlight-btn").addEventListener("click", () =
 document.getElementById("featured-tab").addEventListener("click", async () => {
   document.querySelectorAll(".mode-tab").forEach(b => b.classList.remove("active"));
   document.getElementById("featured-tab").classList.add("active");
+  document.getElementById("photo-strip").hidden = true;
 
   jobGrid.innerHTML = "";
   deepLinkGrid.innerHTML = "";
@@ -528,7 +546,7 @@ document.getElementById("featured-tab").addEventListener("click", async () => {
       renderFeaturedListings([]);
       emptyState.hidden = false;
       document.getElementById("empty-text").innerHTML =
-        `No featured openings are live right now. <a href="post-a-job.html" style="color:var(--red-dark); font-weight:600;">Post a job</a> to get featured here.`;
+        `Nothing is featured right now. <a href="post-a-job.html" style="color:var(--red-dark); font-weight:600;">List an opening</a> to get featured here.`;
     }
   } catch (err) {
     emptyState.hidden = false;
@@ -599,6 +617,7 @@ document.getElementById("mode-tabs").addEventListener("click", (e) => {
     `linear-gradient(120deg, rgba(11,29,58,0.92) 0%, rgba(11,29,58,0.72) 55%, rgba(11,29,58,0.55) 100%), url('${MODE_TEXT[currentMode].heroImage}')`;
 
   document.getElementById("results").hidden = true;
+  document.getElementById("photo-strip").hidden = false;
 });
 
 function buildWorkshopLinks(topic, locationLabel) {
@@ -644,6 +663,7 @@ form.addEventListener("submit", async (e) => {
   const locationLabel = isRemote ? "Remote" : `${getDistrictValue() || stateSel.value}, ${countrySel.value}`;
 
   resultsSection.hidden = true;
+  document.getElementById("photo-strip").hidden = true;
 
   if (currentMode === "workshops") {
     setTimeout(() => {
