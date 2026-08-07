@@ -126,53 +126,54 @@ a { text-decoration: none; color: inherit; }
 <section class="form-section">
   <div class="form-card">
     <h2>Tell us about the opening</h2>
-    <form id="job-post-form">
+    <form id="job-post-form" action="https://formspree.io/f/mnpajake" method="POST">
       <div class="category-select" id="category-select">
         <button type="button" class="category-btn active" data-category="jobs">Jobs</button>
         <button type="button" class="category-btn" data-category="internships">Internships</button>
         <button type="button" class="category-btn" data-category="workshops">Workshops</button>
       </div>
+      <input type="hidden" id="category-input" name="category" value="Job">
 
       <div class="form-row">
         <div class="field">
           <label for="company" id="company-label">Company / Your name</label>
-          <input type="text" id="company" required placeholder="e.g. Acme Studios">
+          <input type="text" id="company" name="company" required placeholder="e.g. Acme Studios">
         </div>
         <div class="field">
           <label for="job-title" id="title-label">Job title</label>
-          <input type="text" id="job-title" required placeholder="e.g. Junior Frontend Developer">
+          <input type="text" id="job-title" name="title" required placeholder="e.g. Junior Frontend Developer">
         </div>
       </div>
 
       <div class="form-row">
         <div class="field">
           <label for="location">Location</label>
-          <input type="text" id="location" placeholder="e.g. Bengaluru, India or Remote">
+          <input type="text" id="location" name="location" placeholder="e.g. Bengaluru, India or Remote">
         </div>
       </div>
 
       <div class="form-row">
         <div class="field">
           <label for="apply-link">Where should applicants go?</label>
-          <input type="url" id="apply-link" required placeholder="https://yourcompany.com/careers/apply">
+          <input type="url" id="apply-link" name="apply_link" required placeholder="https://yourcompany.com/careers/apply">
         </div>
         <div class="field">
           <label for="contact-email">Your email</label>
-          <input type="email" id="contact-email" required placeholder="you@company.com">
+          <input type="email" id="contact-email" name="email" required placeholder="you@company.com">
         </div>
       </div>
 
       <div class="form-row">
         <div class="field">
           <label for="contact-phone">Your phone number</label>
-          <input type="tel" id="contact-phone" required placeholder="e.g. +91 98765 43210">
+          <input type="tel" id="contact-phone" name="phone" required placeholder="e.g. +91 98765 43210">
         </div>
       </div>
 
       <div class="form-row">
         <div class="field">
           <label for="keywords">Search keywords</label>
-          <input type="text" id="keywords" placeholder="e.g. python developer, backend, django">
+          <input type="text" id="keywords" name="keywords" placeholder="e.g. python developer, backend, django">
           <small>Words job seekers might search that should match this listing.</small>
         </div>
       </div>
@@ -180,12 +181,12 @@ a { text-decoration: none; color: inherit; }
       <div class="form-row">
         <div class="field">
           <label for="description">Short description</label>
-          <textarea id="description" placeholder="2-3 lines about the role and what you're looking for."></textarea>
+          <textarea id="description" name="description" placeholder="2-3 lines about the role and what you're looking for."></textarea>
         </div>
       </div>
 
       <button type="submit" class="btn btn--primary">Submit inquiry →</button>
-      <p class="form-note">This opens your email app with everything filled in — just hit send. We'll contact you to confirm pricing and payment before your listing goes live.</p>
+      <p class="form-note">Your details are sent directly to our team. We'll contact you by email or phone to confirm pricing before your listing goes live.</p>
     </form>
   </div>
 </section>
@@ -205,8 +206,6 @@ a { text-decoration: none; color: inherit; }
 </footer>
 
 <script>
-const OWNER_EMAIL = "info@careerfinderco.online";
-
 const CATEGORY_TEXT = {
   jobs: { label: "Job", companyLabel: "Company / Your name", titleLabel: "Job title", titlePlaceholder: "e.g. Junior Frontend Developer" },
   internships: { label: "Internship", companyLabel: "Company / Organization", titleLabel: "Internship title", titlePlaceholder: "e.g. Marketing Intern" },
@@ -225,39 +224,41 @@ document.getElementById("category-select").addEventListener("click", (e) => {
   document.getElementById("company-label").textContent = t.companyLabel;
   document.getElementById("title-label").textContent = t.titleLabel;
   document.getElementById("job-title").placeholder = t.titlePlaceholder;
+  document.getElementById("category-input").value = t.label;
 });
 
-document.getElementById("job-post-form").addEventListener("submit", function (e) {
+const jobPostForm = document.getElementById("job-post-form");
+
+jobPostForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const company = document.getElementById("company").value.trim();
-  const jobTitle = document.getElementById("job-title").value.trim();
-  const jobType = CATEGORY_TEXT[currentCategory].label;
-  const location = document.getElementById("location").value.trim();
-  const applyLink = document.getElementById("apply-link").value.trim();
-  const contactEmail = document.getElementById("contact-email").value.trim();
-  const contactPhone = document.getElementById("contact-phone").value.trim();
-  const keywords = document.getElementById("keywords").value.trim();
-  const description = document.getElementById("description").value.trim();
+  const submitBtn = jobPostForm.querySelector("button[type=submit]");
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting…";
 
-  const subject = `Featured Listing Inquiry: ${jobTitle} at ${company}`;
-  const body =
-`New featured listing inquiry from CareerFinder:
+  try {
+    const formData = new FormData(jobPostForm);
+    const response = await fetch(jobPostForm.action, {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    });
 
-Company: ${company}
-Title: ${jobTitle}
-Type: ${jobType}
-Location: ${location}
-Apply Link: ${applyLink}
-Contact Email: ${contactEmail}
-Contact Phone: ${contactPhone}
-Search Keywords: ${keywords}
-
-Description:
-${description}`;
-
-  const mailto = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+    if (response.ok) {
+      jobPostForm.innerHTML = `
+        <div style="text-align:center; padding:20px 0;">
+          <h3 style="font-size:19px; margin-bottom:10px;">Thanks — we've got it.</h3>
+          <p style="color:var(--muted); font-size:14px; margin:0;">Your inquiry has been sent. We'll reach out by email or phone to confirm details and pricing before your listing goes live.</p>
+        </div>`;
+    } else {
+      throw new Error("Submission failed");
+    }
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    alert("Something went wrong sending your inquiry. Please try again, or email us directly at info@careerfinderco.online.");
+  }
 });
 </script>
 
