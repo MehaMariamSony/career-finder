@@ -43,6 +43,18 @@ a { text-decoration: none; color: inherit; }
 .form-section { max-width: 900px; margin: 40px auto 80px; padding: 0 24px; }
 .form-card { background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 45px -20px rgba(11,29,58,0.18); padding: 30px; }
 .form-card h2 { font-size: 20px; margin-bottom: 22px; }
+
+.category-select {
+  display: flex; justify-content: flex-end; gap: 6px;
+  background: var(--bg); padding: 5px; border-radius: 10px;
+  margin-bottom: 24px; width: fit-content; margin-left: auto;
+}
+.category-btn {
+  padding: 9px 20px; border-radius: 7px; font-weight: 600; font-size: 13.5px;
+  color: var(--muted); cursor: pointer; border: none; background: transparent; font-family: inherit;
+}
+.category-btn.active { background: var(--navy); color: var(--white); }
+
 .form-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 .field { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
@@ -115,27 +127,24 @@ a { text-decoration: none; color: inherit; }
   <div class="form-card">
     <h2>Tell us about the opening</h2>
     <form id="job-post-form">
+      <div class="category-select" id="category-select">
+        <button type="button" class="category-btn active" data-category="jobs">Jobs</button>
+        <button type="button" class="category-btn" data-category="internships">Internships</button>
+        <button type="button" class="category-btn" data-category="workshops">Workshops</button>
+      </div>
+
       <div class="form-row">
         <div class="field">
-          <label for="company">Company / Your name</label>
+          <label for="company" id="company-label">Company / Your name</label>
           <input type="text" id="company" required placeholder="e.g. Acme Studios">
         </div>
         <div class="field">
-          <label for="job-title">Job title</label>
+          <label for="job-title" id="title-label">Job title</label>
           <input type="text" id="job-title" required placeholder="e.g. Junior Frontend Developer">
         </div>
       </div>
 
       <div class="form-row">
-        <div class="field">
-          <label for="job-type">Type</label>
-          <select id="job-type">
-            <option>Full-time job</option>
-            <option>Internship</option>
-            <option>Freelance / Contract</option>
-            <option>Workshop / Training</option>
-          </select>
-        </div>
         <div class="field">
           <label for="location">Location</label>
           <input type="text" id="location" placeholder="e.g. Bengaluru, India or Remote">
@@ -198,12 +207,32 @@ a { text-decoration: none; color: inherit; }
 <script>
 const OWNER_EMAIL = "info@careerfinderco.online";
 
+const CATEGORY_TEXT = {
+  jobs: { label: "Job", companyLabel: "Company / Your name", titleLabel: "Job title", titlePlaceholder: "e.g. Junior Frontend Developer" },
+  internships: { label: "Internship", companyLabel: "Company / Organization", titleLabel: "Internship title", titlePlaceholder: "e.g. Marketing Intern" },
+  workshops: { label: "Workshop", companyLabel: "Host / Organizer name", titleLabel: "Workshop title", titlePlaceholder: "e.g. Intro to UI/UX Design" }
+};
+let currentCategory = "jobs";
+
+document.getElementById("category-select").addEventListener("click", (e) => {
+  const btn = e.target.closest(".category-btn");
+  if (!btn) return;
+  document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  currentCategory = btn.dataset.category;
+
+  const t = CATEGORY_TEXT[currentCategory];
+  document.getElementById("company-label").textContent = t.companyLabel;
+  document.getElementById("title-label").textContent = t.titleLabel;
+  document.getElementById("job-title").placeholder = t.titlePlaceholder;
+});
+
 document.getElementById("job-post-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const company = document.getElementById("company").value.trim();
   const jobTitle = document.getElementById("job-title").value.trim();
-  const jobType = document.getElementById("job-type").value;
+  const jobType = CATEGORY_TEXT[currentCategory].label;
   const location = document.getElementById("location").value.trim();
   const applyLink = document.getElementById("apply-link").value.trim();
   const contactEmail = document.getElementById("contact-email").value.trim();
@@ -216,7 +245,7 @@ document.getElementById("job-post-form").addEventListener("submit", function (e)
 `New featured listing inquiry from CareerFinder:
 
 Company: ${company}
-Job Title: ${jobTitle}
+Title: ${jobTitle}
 Type: ${jobType}
 Location: ${location}
 Apply Link: ${applyLink}
